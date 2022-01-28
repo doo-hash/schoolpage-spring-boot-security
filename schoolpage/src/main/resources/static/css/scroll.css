@@ -1,0 +1,39 @@
+@charset "ISO-8859-1";
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+*{
+	box-sizing : border-box;
+	font-family : Cairo;
+}
+.scroll  h5{
+    color: rgba(0,0,0, 0.5);
+  }
+
+.scroll-content{
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: scroll 50s linear infinite;
+}
+.scroll-content  a{
+    color: rgba(0,0,0, 0.8);
+    letter-spacing: 0.05rem;
+  }
+
+.scroll-content:hover{
+  animation-play-state: paused;
+}
+.scroll-content:hover span:hover{
+    border-bottom: 1px solid orange;
+  }
+
+@keyframes scroll {  
+  to{
+    transform: translateX(-100%);
+  }
+}
+.scroll-content:hover  a{
+    color:rgba(0,0,0, 0.3);
+  }
+  .scroll-content:hover a:hover{
+    color: orange;
+  }
+

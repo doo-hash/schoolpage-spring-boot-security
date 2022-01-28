@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/index :: baseheader}">
+</head>
+<body>
+	<div th:insert = "~{/index :: scroll-block}"></div>
+	<div th:insert = "~{/index :: logo-block}"></div>
+	<div th:insert= "~{/index :: search}"></div>
+	<div class="sticky-top" th:insert = "~{/index :: navbar}"></div>
+
+  <section class="container-lg p-lg-5 signin-layout">
+    <div class="signin-image p-lg-5 d-flex align-items-lg-center justify-content-lg-center">
+      <div class="ps-5 pt-5 p-lg-5">
+      <h2 class="mb-3">Sign in to know more about our students achievements</h2>
+      <p>Don't have an account. <a href="/home/register"><span>Signup</span></a> here</p>
+      </div>
+    </div>
+    <div class="signin-content pt-5 pt-lg-0 d-flex align-items-lg-center justify-content-center">
+        <form th:action="@{/home/login/auth_user}" method="post">
+			<div th:if="${param.error}" class="alert alert-danger">Invalid UserId or Password</div>
+			<div th:if="${param.logout}" class="alert alert-info">You have been logged out</div>
+          <div class="mb-3">
+            <label for="username" class="form-label">User ID</label>
+            <input type="text" class="form-control" name="username" id="username" 
+               placeholder="User ID" required autofocus="autofocus" />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" name="password" id="password"
+              autoComplete="password" 
+             required autofocus="autofocus" />
+          </div>
+          <div class="mb-1 form-check">
+            <input type="checkbox" class="form-check-input" name="Check1" 
+            id="Check1" Checked />
+            <label for="Check1" class="form-label">Remember me</label>
+          </div>
+          <button type="submit" class="button w-50 d-flex justify-content-center">Login</button>
+        </form>
+    </div>
+    <div>
+    </div>
+  </section>
+
+	<div th:insert= "~{/index :: supportus}"></div>
+
+	<div th:insert= "~{/index :: footer}"></div>
+<script>
+if(typeof window !== 'undefined'){
+    const navbar = document.querySelector('nav');
+    const logo = document.querySelector('h3')
+  
+    document.addEventListener("scroll",()=>{
+      var rootelement = document.documentElement
+      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+      if(rootelement.scrollTop/scrolltotal>0.1){
+        navbar.classList.add("nav-scroll");
+        navbar.classList.remove("container-lg");
+        logo.classList.remove("d-none")
+      }
+      else{
+        navbar.classList.remove("nav-scroll");
+        navbar.classList.add("container-lg");
+        logo.classList.add("d-none")
+      }
+    });
+  (()=>{
+    var rootelement = document.documentElement
+    rootelement.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  })();
+}
+</script>
+
+
+</body>
+</html>

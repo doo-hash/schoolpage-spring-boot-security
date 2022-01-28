@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/index :: baseheader}">
+</head>
+<body>
+
+	<div th:insert = "~{/index :: scroll-block}"></div>
+	<div th:insert = "~{/index :: logo-block}"></div>
+	<div th:insert= "~{/index :: search}"></div>
+	<div class="sticky-top" th:insert = "~{/index :: navbar}"></div>
+	<div th:insert="~{/route :: routemap}"></div>
+
+<section class="container-lg p-lg-2">
+            <div>
+            <p class="fs-5 p-2">We offer different courses in xxxxxx xxxxxxxxx xxxxxxx,xxxxxxxx.</p>
+        <table class="table-responsive table-bordered border w-100 mx-auto my-5 fs-6 text-center">
+          <thead>
+            <tr style="color:orange">
+            <th class="p-2">Id</th>
+            <th class="p-2">Course Name</th>
+            <th class="p-2">department</th>
+            <th class="p-2">duration</th>
+            <th class="p-2">tutors</th>
+            <th class="p-2">Brief Intro</th>
+            </tr>
+          </thead>
+          <tbody class="lh-sm">
+          <tr th:each="courses : ${dept_courses}">
+          <td class="p-2" th:text="${courses.id}"></td>
+          <td class="p-2" th:text="${courses.course_name}"></td>
+          <td class="p-2" th:text="${courses.department_name}"></td>
+          <td class="p-2" th:text="${courses.course_duration}"></td>
+          <td class="p-2" th:text="${courses.tutors}"></td>
+          <td class="p-2 lh-base" th:text="${courses.resources}"></td>
+          </tr>
+          </tbody>
+        </table>
+        </div>
+        </section>
+
+	<div th:insert = "~{/index :: schools-block}"></div>
+	<div th:insert = "~{/index :: supportus}"></div>
+	<div th:insert = "~{/index :: footer}"></div>
+<script>
+if(typeof window !== 'undefined'){
+    document.addEventListener("scroll",()=>{
+      var rootelement = document.documentElement
+      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+      if(rootelement.scrollTop/scrolltotal>0.1){
+        document.getElementById('scrolltop').style.opacity="1"
+      }
+      else{
+        document.getElementById('scrolltop').style.opacity="0"
+      }
+    })
+  }
+  const scrolltotop = ()=>{
+    var rootelement = document.documentElement
+    rootelement.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  }
+
+  if(typeof window !== 'undefined'){
+	    const navbar = document.querySelector('nav');
+	    const logo = document.querySelector('h3')
+	  
+	    document.addEventListener("scroll",()=>{
+	      var rootelement = document.documentElement
+	      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+	      if(rootelement.scrollTop/scrolltotal>0.1){
+	        navbar.classList.add("nav-scroll");
+	        navbar.classList.remove("container-lg");
+	        logo.classList.remove("d-none")
+	      }
+	      else{
+	        navbar.classList.remove("nav-scroll");
+	        navbar.classList.add("container-lg");
+	        logo.classList.add("d-none")
+	      }
+	    });
+	  (()=>{
+	    var rootelement = document.documentElement
+	    rootelement.scrollTo({
+	      top:0,
+	      behavior:"smooth"
+	    })
+	  })();
+	}
+</script>
+</body>
+</html>

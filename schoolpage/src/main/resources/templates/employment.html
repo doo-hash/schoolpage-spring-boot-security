@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/index :: baseheader}">
+</head>
+<body>
+	<div th:insert = "~{/index :: scroll-block}"></div>
+	<div th:insert = "~{/index :: logo-block}"></div>
+	<div th:insert= "~{/index :: search}"></div>
+	<div class="sticky-top" th:insert = "~{/index :: navbar}"></div>
+	<div th:insert="~{/route :: routemap}"></div>
+
+
+            <section class="container-lg p-lg-5 section-2">
+            <div class="align-items-center justify-content-center employment-block">
+            <ul class="list-group" th:each="news : ${news}">
+                <li class="list-group-item ps-5">
+                  <a th:href="@{/home/news/articles/}+${news.id}" 
+                  class="text-decoration-none"
+                  th:text="${news.content_title}"></a>
+                </li>
+            </ul>
+           <a class="text-decoration-none d-block text-end mx-lg-3 mb-5 pt-2 p-lg-2" 
+           th:href="@{/home/news}" >
+            view more
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+         class="bi bi-chevron-double-right p-1" viewBox="0 0 16 16">
+          <path fillRule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 
+          0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+          <path fillRule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 
+            0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+          </a>
+            
+        </div>
+        </section>
+
+	<div th:insert = "~{/index :: supportus}"></div>
+	<div th:insert = "~{/index :: footer}"></div>
+<script>
+if(typeof window !== 'undefined'){
+    document.addEventListener("scroll",()=>{
+      var rootelement = document.documentElement
+      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+      if(rootelement.scrollTop/scrolltotal>0.1){
+        document.getElementById('scrolltop').style.opacity="1"
+      }
+      else{
+        document.getElementById('scrolltop').style.opacity="0"
+      }
+    })
+  }
+  const scrolltotop = ()=>{
+    var rootelement = document.documentElement
+    rootelement.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  }
+
+  if(typeof window !== 'undefined'){
+	    const navbar = document.querySelector('nav');
+	    const logo = document.querySelector('h3')
+	  
+	    document.addEventListener("scroll",()=>{
+	      var rootelement = document.documentElement
+	      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+	      if(rootelement.scrollTop/scrolltotal>0.1){
+	        navbar.classList.add("nav-scroll");
+	        navbar.classList.remove("container-lg");
+	        logo.classList.remove("d-none")
+	      }
+	      else{
+	        navbar.classList.remove("nav-scroll");
+	        navbar.classList.add("container-lg");
+	        logo.classList.add("d-none")
+	      }
+	    });
+	  (()=>{
+	    var rootelement = document.documentElement
+	    rootelement.scrollTo({
+	      top:0,
+	      behavior:"smooth"
+	    })
+	  })();
+	}
+</script>
+</body>
+</html>

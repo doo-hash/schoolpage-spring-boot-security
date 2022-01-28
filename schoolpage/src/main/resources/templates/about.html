@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/index :: baseheader}">
+</head>
+<body>
+	<div th:insert = "~{/index :: scroll-block}"></div>
+	<div th:insert = "~{/index :: logo-block}"></div>
+	<div th:insert= "~{/index :: search}"></div>
+	<div class="sticky-top" th:insert = "~{/index :: navbar}"></div>
+	<div th:insert="~{/route :: routemap}"></div>
+
+      <section class="container-lg p-lg-5">
+        <div class="row about-content" style="background-color:rgba(255,165,0,0.4);">
+          <div class="row w-100 align-items-center">
+            <div class="col-12 col-lg-8 p-2">
+              <img th:src="@{https://source.unsplash.com/user/anniespratt/hCb3lIB8L8E/1000x600}" 
+              alt="about" class="img-fluid" />
+            </div>
+            <div class="col-12 col-lg-4 text-center">
+              <h2 class="fw-bold">What Do We Do?</h2>
+              <p class="fs-5 fst-italic">we will provide students a lot of resources and real-time problems to explore.</p>
+              <h2 class="fw-bold">What We Offer Students?</h2>
+              <p class="fs-5 fst-italic">Best Education with practical examples. Brain Storming activities. Sports and arts.
+              </p>
+            </div>
+          </div>
+          <div class="row w-100 text-center">
+            <h2 class="fw-bold">What We Offer Students?</h2>
+              <p class="fs-5 fst-italic">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus ullam magnam doloremque laboriosam repellendus porro ducimus veritatis ipsam aperiam cupiditate!
+               At corrupti sed reprehenderit quasi ab itaque deserunt consequuntur harum!</p>
+          </div>
+        </div>            
+      </section>
+      <section class="container-lg p-lg-5" th:fragment="recentnews">
+      <div class="blog-block">
+        <h2 class="py-3 mt-3 mx-2 fw-bold">Recent News</h2>
+            <ul class="list-group p-0 m-lg-3 border-bottom news-article" th:each="article : ${news}" th:unless= "${article.id > 7}">
+              <li class="list-group-item border-0">
+                <a th:href="@{/home/news/articles/}+${article.id}"
+                 th:text="${article.content_title}" class="article-link fs-5 lh-base"></a>            
+                <span class="d-block text-end fst-italic lh-1 article-text">Posted on 
+                <span th:text="${article.published_date}"></span>
+                 by 
+                 <span class="fw-bold" th:text="${article.author}"></span>.</span>
+              </li>
+            </ul>
+            <a class="text-decoration-none d-block text-end mx-lg-3 mb-5 p-0 p-lg-2"
+             th:href="@{/home/news}" >
+            view more
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+         class="bi bi-chevron-double-right p-1" viewBox="0 0 16 16">
+          <path fillRule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 
+          0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+          <path fillRule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 
+            0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+          </a>
+      </div>
+      </section>
+
+	<div th:insert = "~{/index :: supportus}"></div>
+	<div th:insert = "~{/index :: footer}"></div>
+<script>
+if(typeof window !== 'undefined'){
+    document.addEventListener("scroll",()=>{
+      var rootelement = document.documentElement
+      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+      if(rootelement.scrollTop/scrolltotal>0.1){
+        document.getElementById('scrolltop').style.opacity="1"
+      }
+      else{
+        document.getElementById('scrolltop').style.opacity="0"
+      }
+    })
+  }
+  const scrolltotop = ()=>{
+    var rootelement = document.documentElement
+    rootelement.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  }
+
+  if(typeof window !== 'undefined'){
+	    const navbar = document.querySelector('nav');
+	    const logo = document.querySelector('h3')
+	  
+	    document.addEventListener("scroll",()=>{
+	      var rootelement = document.documentElement
+	      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+	      if(rootelement.scrollTop/scrolltotal>0.1){
+	        navbar.classList.add("nav-scroll");
+	        navbar.classList.remove("container-lg");
+	        logo.classList.remove("d-none")
+	      }
+	      else{
+	        navbar.classList.remove("nav-scroll");
+	        navbar.classList.add("container-lg");
+	        logo.classList.add("d-none")
+	      }
+	    });
+	  (()=>{
+	    var rootelement = document.documentElement
+	    rootelement.scrollTo({
+	      top:0,
+	      behavior:"smooth"
+	    })
+	  })();
+	}
+
+</script>
+</body>
+</html>

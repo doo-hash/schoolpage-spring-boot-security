@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/index :: baseheader}">
+</head>
+<body>
+    <section class="container-fluid py-3 px-lg-5 section-carousel" th:fragment = "carousel">    
+        <div id="carouselCaptions" class="carousel slide shadow-lg" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" 
+          class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="1" 
+          aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="2" 
+          aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="3" 
+          aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="4" 
+          aria-label="Slide 5"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active p-0">
+                    <img th:src="@{/images/image-mask.jpg}" alt="Stay Safe" class="img-fluid img-thumbnail m-0 p-0" />
+                </div>
+                <div class="carousel-item p-0">
+                    <img th:src="@{/images/image-quiz.jpg}" alt="Stay Safe" class="img-fluid img-thumbnail m-0 p-0" />
+                </div>
+                <div class="carousel-item p-0">
+                    <img th:src="@{/images/image-2.jpg}" alt="Stay Safe" class="img-fluid img-thumbnail m-0 p-0" />
+                </div>
+                <div class="carousel-item p-0">
+                    <img th:src="@{/images/image-3.jpg}" alt="Stay Safe" class="img-fluid img-thumbnail m-0 p-0" />
+                </div>
+                <div class="carousel-item p-0">
+                    <img th:src="@{/images/image_discussions.jpg}" alt="Stay Safe" class="img-fluid img-thumbnail m-0 p-0" />
+                </div>
+            </div>
+            <div class="carousel-caption d-flex align-items-center justify-content-md-between px-5">
+                <div class="text-white d-none d-md-block p-3">
+                    <h1 class="pb-5"><font>N</font>othing Is <font>I</font>mpossible, The Word Itself Says  <font>'I'</font> M <font>P</font>OSSIBLE. </h1>
+                    <p class="lead fw-bold"><strong>STAY SAFE</strong></p>
+                    <p>Wear Masks, Keep Social Distance and Wash Your Hands Frequently.</p>
+                </div>
+                <div class="event-list d-none d-lg-block bg-light p-3 p-xl-5">
+                    <ul class="list-group mx-1">
+                        <li class="list-group-item p-2 m-0"><h3>Today Events</h3></li>
+                      	<li class="list-group-item"><a href="/" >Quiz Events</a></li>
+                        <li class="list-group-item"><a href="/" >Sports Events</a></li>
+                        <li class="list-group-item"><a href="/" >Discussion Events</a></li>
+                        <li class="list-group-item"><a href="/" >Science Quiz</a></li>
+                    </ul>
+                    <button type="button" class="button d-flex justify-content-center">View Calendar</button>
+                </div>
+            </div>
+        </div>
+        <div class="event-list d-block d-lg-none mt-5 w-100">
+            <ul class="list-group p-2">
+              <li class="list-group-item"><h2 class="border-bottom py-3 m-0">Today Events</h2></li>
+              <li class="list-group-item bg-light"><a href="/" >Quiz Events</a></li>
+              <li class="list-group-item"><a href="/" >Sports Events</a></li>
+              <li class="list-group-item bg-light"><a href="/" >Discussion Events</a></li>
+              <li class="list-group-item"><a href="/" >Science Quiz</a></li>
+            </ul>
+            <button type="button" class="button d-flex justify-content-center">View Calendar</button>
+        </div>
+    </section>
+</body>
+</html>

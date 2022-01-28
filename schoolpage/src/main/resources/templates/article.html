@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/index :: baseheader}">
+</head>
+<body>
+	<div th:insert = "~{/index :: scroll-block}"></div>
+	<div th:insert = "~{/index :: logo-block}"></div>
+	<div th:insert= "~{/index :: search}"></div>
+	<div class="sticky-top" th:insert = "~{/index :: navbar}"></div>
+		<div th:insert="~{/route :: routemap}"></div>
+	
+	<div class="px-2">
+     	<span th:text="${errormsg}"></span>               
+    </div>
+    
+    <section class="container-lg bg-light p-lg-5">
+      <div class="p-2 article-section">
+        
+        <div class="container h-50 p-3 w-50 float-end">
+        <img th:src="@{/images/image_discussions.jpg}" class="rounded img-fluid article-image" alt="Stay Safe" />          
+        </div>
+	    <div class="d-block">
+	    <h4 class="d-block fw-bold py-lg-2 mb-2 lh-lg" style="color:rgba(255,165,0,0.8);letter-spacing:0.1rem;" th:text="${blogarticle.content_title}"></h4>
+        <span class="d-inline-flex d-lg-block pb-1 fs-6 fst-italic fw-normal lh-base article-text">Written by <strong> <i th:text="${' '+blogarticle.author}"> </i></strong>.</span>
+        <span class="d-inline-flex d-lg-block pb-1 fs-6 fst-italic lh-base article-text">Related Subjects: <i th:text="${' '+blogarticle.department}" class="fw-bold"> </i>.</span>
+        <span class="d-inline-flex d-lg-block pb-1 fs-6 fst-italic lh-base article-text">Profession: <i th:text="${' '+blogarticle.profession}" class="fw-bold"></i>.</span>
+        <span class="d-inline-flex d-lg-block pb-1 fs-6 fw-light fst-italic lh-base article-text">Published on <i th:text="${' '+blogarticle.published_date}" class="fw-bold"></i>.</span>
+        </div>
+      <div class="article-content py-2">
+      <p class="pb-2" th:text="${blogarticle.description}"></p>
+      <p class="pb-2">lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit labore harum 
+              aliquam exercitationem sint facilis adipisci, placeat sarticlesente.Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit labore harum 
+              aliquam exercitationem sint facilis adipisci, placeat sarticlesente.</p>
+    <p class="p-3 border border-rounded"><i>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit labore harum 
+      aliquam exercitationem sint facilis adipisci, placeat sarticlesente.</i></p>
+    <p class="pb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit labore harum 
+      aliquam exercitationem sint facilis adipisci, placeat sarticlesente.Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit labore harum 
+    aliquam exercitationem sint facilis adipisci, placeat sarticlesente.</p>
+    <p class="pb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit labore harum 
+      aliquam exercitationem sint facilis adipisci, placeat sarticlesente.Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit labore harum 
+    aliquam exercitationem sint facilis adipisci, placeat sarticlesente.</p>
+    <p class="pb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit labore harum 
+      aliquam exercitationem sint facilis adipisci, placeat sarticlesente.Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit labore harum 
+    aliquam exercitationem sint facilis adipisci, placeat sarticlesente.</p>
+    </div>
+    </div>
+  </section>
+
+	<div th:insert = "~{/index :: supportus}"></div>
+	<div th:insert = "~{/index :: footer}"></div>
+<script>
+if(typeof window !== 'undefined'){
+    document.addEventListener("scroll",()=>{
+      var rootelement = document.documentElement
+      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+      if(rootelement.scrollTop/scrolltotal>0.1){
+        document.getElementById('scrolltop').style.opacity="1"
+      }
+      else{
+        document.getElementById('scrolltop').style.opacity="0"
+      }
+    })
+  }
+  const scrolltotop = ()=>{
+    var rootelement = document.documentElement
+    rootelement.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  }
+
+  if(typeof window !== 'undefined'){
+	    const navbar = document.querySelector('nav');
+	    const logo = document.querySelector('h3')
+	  
+	    document.addEventListener("scroll",()=>{
+	      var rootelement = document.documentElement
+	      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+	      if(rootelement.scrollTop/scrolltotal>0.1){
+	        navbar.classList.add("nav-scroll");
+	        navbar.classList.remove("container-lg");
+	        logo.classList.remove("d-none")
+	      }
+	      else{
+	        navbar.classList.remove("nav-scroll");
+	        navbar.classList.add("container-lg");
+	        logo.classList.add("d-none")
+	      }
+	    });
+	  (()=>{
+	    var rootelement = document.documentElement
+	    rootelement.scrollTo({
+	      top:0,
+	      behavior:"smooth"
+	    })
+	  })();
+	}
+</script>
+</body>
+</html>

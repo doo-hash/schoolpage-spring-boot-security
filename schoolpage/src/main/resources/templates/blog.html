@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/index :: baseheader}">
+</head>
+<body>
+      	<div th:insert = "~{/index :: scroll-block}"></div>
+	<div th:insert = "~{/index :: logo-block}"></div>
+	<div th:insert= "~{/index :: search}"></div>
+	<div class="sticky-top" th:insert = "~{/index :: navbar}"></div>
+	<div th:insert="~{/route :: routemap}"></div>
+      
+      
+        <section class="container-lg p-lg-5 blog-articles">
+        <div class="d-lg-flex justify-content-center">
+        <div class="flex-shrink-0 mb-5 pt-5 mb-lg-0 p-lg-5 d-block d-lg-none">
+                <ul class="list-group rounded">
+                	<li class="list-group-item"><h4 class="text-center m-2 py-2 py-lg-4">Quick Links</h4></li>
+                	<li class="list-group-item bg-light"><a href="/">District News</a></li>
+                    <li class="list-group-item bg-light"><a href="/">Schools</a></li>
+                    <li class="list-group-item bg-light"><a href="/">Events</a></li>
+                    <li class="list-group-item bg-light"><a href="/">Academic Resources</a></li>
+                    <li class="list-group-item bg-light"><a href="/">FAQs</a></li>
+                </ul>
+            </div>
+        <div class="flex-grow-1 align-items-center bg-white rounded shadow p-2 p-lg-0 m-0 m-lg-5">
+        <div class="bg-light rounded mx-1 mb-3 m-lg-5 border d-lg-block" th:each="article : ${articles}">
+        <div class="d-flex">
+        <div class="p-0 m-0 article-image">
+        <img th:src="@{/images/image_discussions.jpg}" class="p-2 pe-lg-3 img-fluid article-image rounded" alt="Stay Safe" />
+        </div>
+        <div class="p-2 px-lg-3 py-lg-5">
+            <span  class="pb-2 pe-lg-2 pb-lg-1 article-text d-block d-lg-inline-flex">Author: <a th:text="${article.author}"></a></span>
+            <span  class="pb-2 pe-lg-2 pb-lg-1 article-text d-block d-lg-inline-flex">Profession: <a th:text="${article.profession}"></a></span>
+            <span  class="pb-2 pe-lg-2 pb-lg-1 article-text d-block d-lg-inline-flex">Department: <a th:text="${article.department}"></a></span>    
+            <span class="pb-2 pe-lg-2 pb-lg-1 article-text d-block d-lg-inline-flex">published on<a th:text="${article.published_date}"></a>.</span>
+        </div>
+        </div>
+            <a th:href="@{/home/blog/article/}+${article.id}" th:text="${article.content_title}" class="p-2 article-link"></a>
+            <p class="p-2 d-none d-lg-block article-content" th:text="${article.description}"></p>
+        </div>
+        </div>
+        <div class="flex-shrink-0 p-3 py-5 d-none d-lg-block">
+               <ul class="list-group rounded">
+                	<li class="list-group-item bg-light"><h4 class="text-center m-2 py-2">Quick Links</h4></li>
+                	<li class="list-group-item bg-light"><a href="/">District News</a></li>
+                    <li class="list-group-item bg-light"><a href="/">Schools</a></li>
+                    <li class="list-group-item bg-light"><a href="/">Events</a></li>
+                    <li class="list-group-item bg-light"><a href="/">Academic Resources</a></li>
+                    <li class="list-group-item bg-light"><a href="/">FAQs</a></li>
+                </ul>
+            </div>
+        </div>
+        </section>
+
+	<div th:insert = "~{/index :: supportus}"></div>
+	<div th:insert = "~{/index :: footer}"></div>
+<script>
+if(typeof window !== 'undefined'){
+    document.addEventListener("scroll",()=>{
+      var rootelement = document.documentElement
+      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+      if(rootelement.scrollTop/scrolltotal>0.1){
+        document.getElementById('scrolltop').style.opacity="1"
+      }
+      else{
+        document.getElementById('scrolltop').style.opacity="0"
+      }
+    })
+  }
+  const scrolltotop = ()=>{
+    var rootelement = document.documentElement
+    rootelement.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  }
+
+  if(typeof window !== 'undefined'){
+	    const navbar = document.querySelector('nav');
+	    const logo = document.querySelector('h3')
+	  
+	    document.addEventListener("scroll",()=>{
+	      var rootelement = document.documentElement
+	      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+	      if(rootelement.scrollTop/scrolltotal>0.1){
+	        navbar.classList.add("nav-scroll");
+	        navbar.classList.remove("container-lg");
+	        logo.classList.remove("d-none")
+	      }
+	      else{
+	        navbar.classList.remove("nav-scroll");
+	        navbar.classList.add("container-lg");
+	        logo.classList.add("d-none")
+	      }
+	    });
+	  (()=>{
+	    var rootelement = document.documentElement
+	    rootelement.scrollTo({
+	      top:0,
+	      behavior:"smooth"
+	    })
+	  })();
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+@charset "ISO-8859-1";
+@import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+*{
+	box-sizing : border-box;
+	font-family : Cairo;
+}
+
+.logo-block{
+  position: relative;
+  }
+  .logo-block h1{
+    letter-spacing: 0.05rem;
+  }
+ .logo-block .logo-block-item,
+ .logo-block .logo-block-item a{
+	color: rgba(0,0,0, 0.8);
+    letter-spacing: 0.05rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+.logo-block .logo-block-item::after{
+  content: '';
+  display: block;
+  background: orange;
+  height: 2px;
+  width: 100%;
+  transform: scale(0,1);
+  transition: transform 400ms ease-in-out;
+}
+.logo-block .logo-block-item:hover::after{
+  transform: scale(1,1);
+}
+.logo-block .logo-block-item:hover,
+.logo-block-item:nth-child(2):hover>a,
+.logo-block-item:nth-child(2):focus>a,
+.logo-block-item:nth-child(2):active>a
+{
+	color: orange;
+}
+
+.logo-block span ul .logo-block-item:hover a{
+	color:black ;
+}
+
+.search-bar{
+  background-color:rgba(0,0,0, 0.05);
+  border-radius: 0.1rem;
+  }
+  .search-bar form div{
+    background-color: white;
+    border: 1px solid orange;
+    border-radius: 100px;
+    color: orange;
+  }
+  .search-bar form input,button{
+    border:none;
+    border-radius: 100px;
+  }
+

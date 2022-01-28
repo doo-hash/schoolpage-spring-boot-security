@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/index :: baseheader}">
+</head>
+<body>
+
+	<div th:insert = "~{/index :: scroll-block}"></div>
+	<div th:insert = "~{/index :: logo-block}"></div>
+	<div th:insert= "~{/index :: search}"></div>
+	<div class="sticky-top" th:insert = "~{/index :: navbar}"></div>
+	<div th:insert="~{/route :: routemap}"></div>
+
+<section class="container-lg p-lg-5">
+            <div class="admission-block px-lg-2">
+            <p class="fs-5 pt-2">We welcome students from different places in xxxxxx xxxxxxxxx xxxxxxx,xxxxxxxx.</p>
+        <ul class="list-group my-3 m-lg-3 bg-light p-2">
+          <li><h5 class="text-center p-3">Links for Registration</h5></li>
+          <li class="list-group-item"><a href="/" class="text-decoration-none">We welcome students from different places in xxxxxx xxxxxxxxx xxxxxxx,xxxxxxxx.
+            </a>
+            </li>
+          <li class="list-group-item"><a href="/" class="text-decoration-none">
+              We welcome students from different places in xxxxxx xxxxxxxxx xxxxxxx,xxxxxxxx.</a>
+              </li>
+          <li class="list-group-item"><a href="/" class="text-decoration-none">
+              We welcome students from different places in xxxxxx xxxxxxxxx xxxxxxx,xxxxxxxx.</a>
+              </li>
+              <li class="list-group-item"><a href="/" class="text-decoration-none">
+              We welcome students from different places in xxxxxx xxxxxxxxx xxxxxxx,xxxxxxxx.</a>
+             </li>
+              <li class="list-group-item"><a href="/" class="text-decoration-none">
+              We welcome students from different places in xxxxxx xxxxxxxxx xxxxxxx,xxxxxxxx.</a>
+              </li>
+        </ul>
+        
+        <table class="table-responsive table-bordered border w-100 mx-auto my-5 fs-5 text-center">
+          <thead>
+            <tr style="color:orange">
+            <th>S.No.</th><th>Departments</th><th>faculty</th><th>Admission Dates</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr th:each = "data : ${admissionsdata}">
+          <td th:text="${data.id}"></td>
+          <td th:text="${data.departments}"></td>
+          <td th:text="${data.faculty}"></td>
+          <td><span th:text="${data.start_date+' '}"></span>to<span th:text="${' '+data.end_date}"></span></td>
+          </tr>
+          </tbody>
+        </table>
+        
+        <table class="table-responsive table-bordered border w-100 mx-auto my-5 fs-5 text-center">
+          <thead>
+            <tr style="color:orange">
+            <th>S.No.</th><th>Departments</th><th>Seats alloted</th><th>Seats filled</th><th>Remaining</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr th:each = "data : ${admissionsdata}">
+          <td th:text="${data.id}"></td>
+          <td th:text="${data.departments}"></td>
+          <td th:text="${data.alloted}"></td>
+          <td th:text="${data.filled}"></td>
+          <td th:text="${data.remaining}"></td>
+          </tr>
+          </tbody>
+        </table>
+        
+        </div>
+        </section>
+
+	<div th:insert = "~{/index :: schools-block}"></div>
+	<div th:insert = "~{/index :: supportus}"></div>
+	<div th:insert = "~{/index :: footer}"></div>
+<script>
+if(typeof window !== 'undefined'){
+    document.addEventListener("scroll",()=>{
+      var rootelement = document.documentElement
+      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+      if(rootelement.scrollTop/scrolltotal>0.1){
+        document.getElementById('scrolltop').style.opacity="1"
+      }
+      else{
+        document.getElementById('scrolltop').style.opacity="0"
+      }
+    })
+  }
+  const scrolltotop = ()=>{
+    var rootelement = document.documentElement
+    rootelement.scrollTo({
+      top:0,
+      behavior:"smooth"
+    })
+  }
+
+  if(typeof window !== 'undefined'){
+	    const navbar = document.querySelector('nav');
+	    const logo = document.querySelector('h3')
+	  
+	    document.addEventListener("scroll",()=>{
+	      var rootelement = document.documentElement
+	      var scrolltotal = rootelement.scrollHeight-rootelement.clientHeight
+	      if(rootelement.scrollTop/scrolltotal>0.1){
+	        navbar.classList.add("nav-scroll");
+	        navbar.classList.remove("container-lg");
+	        logo.classList.remove("d-none")
+	      }
+	      else{
+	        navbar.classList.remove("nav-scroll");
+	        navbar.classList.add("container-lg");
+	        logo.classList.add("d-none")
+	      }
+	    });
+	  (()=>{
+	    var rootelement = document.documentElement
+	    rootelement.scrollTo({
+	      top:0,
+	      behavior:"smooth"
+	    })
+	  })();
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/index :: baseheader}">
+</head>
+<body>
+	<div th:insert = "~{/index :: scroll-block}"></div>
+	<div th:insert = "~{/index :: logo-block}"></div>
+	<div th:insert= "~{/index :: search}"></div>
+	<div class="sticy-top" th:insert = "~{/index :: navbar}"></div>
+	<div th:insert="~{/route :: routemap}"></div>
+
+          <section class="container-lg p-lg-5 contact-us">
+      <div class="d-lg-flex align-items-center justify-content-center">
+        <div class="flex-shrink-0 py-5 px-lg-5 text-center">
+          <h4 class="text-decoration-underline py-2">Address</h4>
+          <p class="fs-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" 
+            fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+              <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+            </svg> xxxxx, xxx</p>
+          <p class="fs-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" 
+            fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
+              <path fillRule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+            </svg> Phone: +1-816-200-0799</p>
+          <p class="fs-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" 
+            fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+              <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/>
+            </svg> Email: mail@mail.com</p>
+        </div>
+        <div class="flex-grow-1 p-lg-5">
+
+        <form class="mt-3 px-lg-5" action="/home/contactus" 
+        th:action="@{/home/contactus/save}" th:object="${feedback}" method="post">
+        <div class="alert alert-info p-2" th:if="${param.success}">Your feedback has been submitted.</div>
+          <div class="mb-3">
+            <input type="text" class="form-control" th:field="*{name}"
+             name="name" 
+              id="name" placeholder="Name" />
+     		<span th:if="${#fields.errors('name')}" th:errors="*{name}" class="p-1 error fw-light"></span>
+          </div>
+          <div class="mb-3">
+            <div class="input-group">
+              <input type="email" class="form-control" th:field="*{email}"
+               name="email" 
+               id="email" placeholder="Email" />
+        		<span th:if="${#fields.errors('email')}" th:errors="*{email}" class="d-block p-1 fw-light error"></span>
+            </div>
+          </div>
+          <div class="mb-3">
+              <input type="text" class="form-control" th:field="*{subject}"
+               name="subject"
+               id="subject" placeholder="Subject" />
+	      		<span th:if="${#fields.errors('subject')}" th:errors="*{subject}" class="p-1 fw-light error"></span>
+          </div>
+          <div class="mb-3">
+                <textarea class="form-control" th:field="*{feedback_message}"
+                 name="feedbackmsg" id="feedbackmsg" rows="5" placeholder = "Your feedback" >
+                </textarea>
+        		<span th:if="${#fields.errors('feedback_message')}" th:errors="*{feedback_message}" class="p-1 fw-light error"></span>
+            </div>
+          <button type="submit" class="button w-50 d-flex justify-content-center">Submit</button>
+        </form>
+        </div>
+      </div>
+      </section>
+
+	<div th:insert = "~{/index :: supportus}"></div>
+	<div th:insert = "~{/index :: footer}"></div>
+
+</body>
+</html>
