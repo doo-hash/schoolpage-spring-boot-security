@@ -37,21 +37,21 @@
         </svg>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a th:href="@{/home/}+${userrole}+@{/}+${userid}+@{/notifications}" class="dropdown-item">Notifications</a></li>
-          <li><a th:href="@{/home/}+${userrole}+@{/}+${userid}+@{/settings}" class="dropdown-item">Settings</a></li>
-          <li><a th:href="@{/home/}+${userrole}+@{/}+${userid}+@{/}+${userrole}+@{_logout}" class="dropdown-item">Logout</a></li>
+          <li><a th:href="@{/home/}+${userrole}+@{/notifications}" class="dropdown-item">Notifications</a></li>
+          <li><a th:href="@{/home/}+${userrole}+@{/settings}" class="dropdown-item">Settings</a></li>
+          <li><a th:href="@{/home/user/logout}" class="dropdown-item">Logout</a></li>
         </ul>
       </header>
     </div>   
     <div class="container-lg p-5">
     	<h3 class="p-3 mb-2 text-center">Settings</h3>
     	<ul class="list-group list-group-flush">
-        	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/}+${userid}+@{/edit}">Edit Profile</a></li>
-           	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/}+${userid}+@{/remove}">Delete account</a></li>
-           	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/}+${userid}+@{/settings}">Change appearance</a></li>
-           	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/}+${userid}+@{/settings}">Privacy</a></li>
-        	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/}+${userid}+@{/settings}">Block Notifications</a></li>
-           	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/}+${userid}+@{/settings}">Preferences</a></li>
+        	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/edit}">Edit Profile</a></li>
+           	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/remove}">Delete account</a></li>
+           	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/settings}">Change appearance</a></li>
+           	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/settings}">Privacy</a></li>
+        	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/settings}">Block Notifications</a></li>
+           	<li class="list-group-item"><a th:href="@{/home/}+${userrole}+@{/settings}">Preferences</a></li>
         </ul>
     </div>
     </section>

@@ -10,19 +10,19 @@ public interface ISchoolUserService extends UserDetailsService {
 	
 	public SchoolUser saveSchoolUser(SchoolUser user);
 	
-	public boolean existsByUserId(String userId);
-	public boolean existsByFirstName(String firstName);
-	public boolean existsByLastName(String lastName);
+	public boolean existsByUserId(String userid);
+	public boolean existsByFirstName(String firstname);
+	public boolean existsByLastName(String lastname);
 	public boolean existsByEmail(String email);
 
-	public SchoolUser findUserByUserId(String userId);
-	public SchoolUser findUserByFirstName(String firstName);
-	public SchoolUser findUserByLastName(String lastName);
+	public SchoolUser findUserByUserId(String userid);
+	public SchoolUser findUserByFirstName(String firstname);
+	public SchoolUser findUserByLastName(String lastname);
 	public SchoolUser findUserByEmail(String email);
-	public SchoolUser findUserByPhoneNumber(String phoneNumber);
+	public SchoolUser findUserByPhoneNumber(String phonenumber);
 	
 	public SchoolUser updateUser(SchoolUser user);
-	public void deleteUser(String userId);
+	public void deleteUser(String userid);
 	
 	public List<SchoolUser> findAllUsersByDesignation(String designation);
 	public List<SchoolUser> findAllUsers();

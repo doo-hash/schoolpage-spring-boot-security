@@ -28,7 +28,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			Authentication authentication) throws IOException, ServletException {
 		
 		Collection <? extends GrantedAuthority> authorities = authentication.getAuthorities();
-		
+		logger.info("good");
 		logger.info(authorities.toString());
 		
 		authorities.forEach(authority -> {
@@ -41,21 +41,36 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 			}
 			else if(authority.getAuthority().equals("TEACHER")) {
 				try {
+					logger.info(authority.getAuthority());
 					redirectStrategy.sendRedirect(request, response, "/home/teacher/portal");
+					logger.info(authority.getAuthority());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 			else if(authority.getAuthority().equals("PARENT")) {
+				logger.info(authority.getAuthority());
 				try {
+					logger.info(authority.getAuthority());
 					redirectStrategy.sendRedirect(request, response, "/home/parent/portal");
+					logger.info(authority.getAuthority());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			else {
-	            throw new IllegalStateException();
-	        }
+			else if(authority.getAuthority().equals("USER")) {
+				logger.info(authority.getAuthority());
+				try {
+					logger.info(authority.getAuthority());
+					redirectStrategy.sendRedirect(request, response, "/home/user/portal");
+					logger.info(authority.getAuthority());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			else {	
+				  throw new IllegalStateException();
+				  }
 		});
 		
 	}

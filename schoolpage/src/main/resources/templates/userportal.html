@@ -38,9 +38,9 @@
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                  <a class="dropdown-item" th:href="@{/home/parent/notifications}">Notifications</a></li>
+                  <a class="dropdown-item" th:href="@{/home/user/notifications}">Notifications</a></li>
                 <li>
-                  <a class="dropdown-item" th:href="@{/home/parent/settings}">Settings</a></li>
+                  <a class="dropdown-item" th:href="@{/home/user/settings}">Settings</a></li>
                 <li>
                   <a class="dropdown-item" th:href="@{/home/user/logout}">Logout</a></li>
               </ul>
@@ -92,7 +92,7 @@
             <div class="tab-content" id="tabContent">
             <div class="tab-pane fade show active" id="all" role="tabpanel" 
               aria-labelledby="all-tab">
-              <h3 class="p-3 mb-2 text-center text-dark" th:text="WELCOME+${' '+parent.firstname}+${' '+parent.lastname}"></h3>
+              <h3 class="p-3 mb-2 text-center text-dark" th:text="WELCOME+${' '+user.firstname}+${' '+user.lastname}"></h3>
               <table class="table table-bordered table-striped text-center mb-5 p-2 border">
                 <thead><tr><th>Number of classes registered</th><th>Messages</th>
                   <th>Attendance</th></tr></thead>
@@ -151,7 +151,7 @@
               <h3 class="p-3 mb-2 text-center">My Profile</h3>
               <table class="table table-bordered table-hover mb-2">
                 <thead class="table-dark"><tr><th></th><th>Details</th></tr></thead>
-                <tbody th:each="data : ${parent}">
+                <tbody th:each="data : ${user}">
                 <tr>
                 <td>Full Name</td><td th:text="${data.firstname+' '}+${data.lastname+' '}"></td></tr>
  	            <tr><td>Phone Number</td><td th:text="${data.phonenumber}"></td></tr>

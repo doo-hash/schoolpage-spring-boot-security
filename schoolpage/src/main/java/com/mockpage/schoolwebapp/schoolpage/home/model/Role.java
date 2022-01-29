@@ -5,10 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "roles")
-public class Roles {
+@Table(name = "roles", uniqueConstraints = @UniqueConstraint(columnNames = "rolename"))
+public class Role {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +17,8 @@ public class Roles {
 			
 	private String rolename;
 
- 	
-
-	public Roles(long id, String rolename) {
+	public Role(String rolename) {
 		super();
-		this.id = id;
 		this.rolename = rolename;
 	}
 
@@ -51,7 +49,7 @@ public class Roles {
 	}
 
 
-	public Roles() {
+	public Role() {
 		super();
 	}
 

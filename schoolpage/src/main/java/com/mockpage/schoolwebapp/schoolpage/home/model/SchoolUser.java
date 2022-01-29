@@ -3,7 +3,6 @@ package com.mockpage.schoolwebapp.schoolpage.home.model;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,105 +10,112 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "school_users", uniqueConstraints = @UniqueConstraint(columnNames = "user_id"))
+@Table(name = "schoolUsers")
 public class  SchoolUser{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
-	@Column(name = "first_name",nullable = false)
-	@Pattern(regexp = "^[a-zA-Z_\s]{2,40}",message="Must contain only letters.")
-	@NotBlank(message = "Firstname cannot be empty.")
-	@Size(min=2, message = "Firstname must be more than 2 characters.")
-	private String firstName;
+	@NotBlank(message="First Name cannot be empty.")
+	@Pattern(regexp = "^[a-zA-Z\s]{2,50}", message = "Must contain only letters.")
+	@Size(min = 2, message = "First Name cannot be less than 2 characters.")
+	private String firstname;
 	
-	@Column(name = "last_name",nullable = false)
-	@Pattern(regexp = "^[a-zA-Z_\s]{2,40}",message="Must contain only letters.")
-	@NotBlank(message = "Lastname cannot be empty.")
-	@Size(min=2,message = "Lastname cannot be less than 2 characters.")
-	private String lastName;
+	@NotBlank(message="Last Name cannot be empty.")
+	@Pattern(regexp = "^[a-zA-Z\s]{2,50}", message = "Must contain only letters.")
+	@Size(min = 2, message = "Last Name cannot be less than 2 characters.")
+	private String lastname;
 	
-	@Column(name = "user_email",nullable = false)
+	@NotBlank(message="Email cannot be empty.")
 	@Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$",
-			message="Invalid email address.")
-	@NotEmpty(message = "Email is Mandatory.")
-	@Email(message = "Invalid email.")
+	message="Invalid email address.")
+	@Email
 	private String email;
 	
-	@Column(name = "user_phonenumber",nullable = false)
-	@Pattern(regexp = "^[0-9-]{10,12}",
-			message="Invalid Phone address.")
-	@NotEmpty(message = "Phone Number is Mandatory.")
-	@Size(min = 10,max = 12,message = "Must contain only 10 numbers.")
-	private String phoneNumber;
-
+	@NotBlank(message="Phone number cannot be empty.")
+	@Pattern(regexp = "^[0-9-]{12}", message = "Must contain only numbers.")
+	@Size(min = 10, message = "Phone number cannot be less than 10 characters.")
+	private String phonenumber;
 	
-	@Column(name = "user_id",nullable = false)
-	@Pattern(regexp = "^[a-zA-Z0-9_-]{2,40}",message="User Id must not contain special characters.")
-	@NotEmpty(message = "User Id cannot be empty.")
-	private String userId;
+	@NotBlank(message="User id cannot be empty.")
+	@Pattern(regexp = "^[a-zA-Z0-9-_]{2,50}", message = "Invalid characters.")
+	@Size(min = 3, message = "User id cannot be less than 3 characters.")
+	private String userid;
 	
-	@Column(name = "user_designation",nullable = false)
-	@Pattern(regexp = "^[a-zA-Z_\s]{2,40}",message="Must contain only letters.")
-	@NotEmpty(message = "Designation cannot be empty.")
+	@NotBlank(message="Designation cannot be empty.")
+	@Pattern(regexp = "^[a-zA-Z\s]{2,50}", message = "Must contain only letters.")
+	@Size(min = 2, message = "Designation cannot be less than 2 characters.")
 	private String designation;
 	
-	@Column(name = "password",nullable = false)
-	@NotBlank(message = "Passowrd cannot be empty.")
+	@NotBlank(message="Password cannot be empty.")
+	@Size(min = 8, message = "Password cannot be less than 8 characters.")
 	private String password;
 	
-	@ManyToMany(fetch =FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinTable(
-			name = "user_roles",
-			joinColumns =  @JoinColumn(
-					name = "user_uid", referencedColumnName = "id"),
-			inverseJoinColumns =  @JoinColumn(
-					name = "role_uid", referencedColumnName = "id")
+			name = "userRoles",
+			joinColumns = @JoinColumn(name = "userentityid_fk", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "roleentityid_fk", referencedColumnName = "id")
 			)
-	private Collection<Roles> roles;
+	private Collection<Role> roles;
 	
-	@Column(name = "check_terms")
-	@AssertTrue(message="Please check this before you proceed")
-	private boolean checked;
+	@AssertTrue(message = "Please check before you proceed.")
+	private boolean checkterms;
 
-	public SchoolUser() {
+	
+	public SchoolUser(
+			@NotBlank(message = "First Name cannot be empty.") @Pattern(regexp = "^[a-zA-Z ]{2,50}", message = "Must contain only letters.") @Size(min = 2, message = "First Name cannot be less than 2 characters.") String firstname,
+			@NotBlank(message = "Last Name cannot be empty.") @Pattern(regexp = "^[a-zA-Z ]{2,50}", message = "Must contain only letters.") @Size(min = 2, message = "Last Name cannot be less than 2 characters.") String lastname,
+			@NotBlank(message = "Email cannot be empty.") @Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Invalid email address.") @Email String email,
+			@NotBlank(message = "Phone number cannot be empty.") @Pattern(regexp = "^[0-9-]{12}", message = "Must contain only numbers.") @Size(min = 10, message = "Phone number cannot be less than 10 characters.") String phonenumber,
+			@NotBlank(message = "User id cannot be empty.") @Pattern(regexp = "^[a-zA-Z0-9-_]{2,50}", message = "Invalid characters.") @Size(min = 3, message = "User id cannot be less than 3 characters.") String userid,
+			@NotBlank(message = "Designation cannot be empty.") @Pattern(regexp = "^[a-zA-Z ]{2,50}", message = "Must contain only letters.") @Size(min = 2, message = "Designation cannot be less than 2 characters.") String designation,
+			@NotBlank(message = "Password cannot be empty.") @Size(min = 8, message = "Password cannot be less than 8 characters.") String password,
+			Collection<Role> roles, @AssertTrue(message = "Please check before you proceed.") boolean checkterms) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.phonenumber = phonenumber;
+		this.userid = userid;
+		this.designation = designation;
+		this.password = password;
+		this.roles = roles;
+		this.checkterms = checkterms;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public String getEmail() {
@@ -120,20 +126,20 @@ public class  SchoolUser{
 		this.email = email;
 	}
 
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getPhonenumber() {
+		return phonenumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
 	public String getDesignation() {
@@ -152,49 +158,31 @@ public class  SchoolUser{
 		this.password = password;
 	}
 
-	public Collection<Roles> getRoles() {
+	public Collection<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Collection<Roles> roles) {
+	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
 
-	public boolean isChecked() {
-		return checked;
+	public boolean isCheckterms() {
+		return checkterms;
 	}
 
-	public void setChecked(boolean checked) {
-		this.checked = checked;
+	public void setCheckterms(boolean checkterms) {
+		this.checkterms = checkterms;
 	}
 
 	@Override
 	public String toString() {
-		return "SchoolUser [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phoneNumber="
-				+ phoneNumber + ", userId=" + userId + ", designation=" + designation + ", password=" + password
-				+ ", roles=" + roles + ", checked=" + checked + "]";
+		return "SchoolUser [firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", phonenumber="
+				+ phonenumber + ", userid=" + userid + ", designation=" + designation + ", password=" + password
+				+ ", roles=" + roles + ", checkterms=" + checkterms + "]";
 	}
 
-	public SchoolUser(
-			@Pattern(regexp = "^[a-zA-Z_ ]{2,40}", message = "Must contain only letters.") @NotBlank(message = "Firstname cannot be empty.") @Size(min = 2, message = "Firstname must be more than 2 characters.") String firstName,
-			@Pattern(regexp = "^[a-zA-Z_ ]{2,40}", message = "Must contain only letters.") @NotBlank(message = "Lastname cannot be empty.") @Size(min = 2, message = "Lastname cannot be less than 2 characters.") String lastName,
-			@Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Invalid email address.") @NotEmpty(message = "Email is Mandatory.") @Email(message = "Invalid email.") String email,
-			@Pattern(regexp = "^[0-9-]{10,12}", message = "Invalid Phone address.") @NotEmpty(message = "Phone Number is Mandatory.") @Size(min = 10, max = 12, message = "Must contain only 10 numbers.") String phoneNumber,
-			@Pattern(regexp = "^[a-zA-Z0-9_-]{2,40}", message = "User Id must not contain special characters.") @NotEmpty(message = "User Id cannot be empty.") String userId,
-			@Pattern(regexp = "^[a-zA-Z_ ]{2,40}", message = "Must contain only letters.") @NotEmpty(message = "Designation cannot be empty.") String designation,
-			@NotBlank(message = "Passowrd cannot be empty.") String password,
-			Collection<Roles> roles, @AssertTrue(message = "Please check this before you proceed") boolean checked) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.userId = userId;
-		this.designation = designation;
-		this.password = password;
-		this.roles = roles;
-		this.checked = checked;
+	public SchoolUser() {
 	}
-
-
+	
+	
 }

@@ -10,24 +10,24 @@ import com.mockpage.schoolwebapp.schoolpage.home.model.SchoolUser;
 @Repository
 public interface SchoolUserRepository extends JpaRepository<SchoolUser,Long> {
 
-	boolean existsByUserId(String userId);
+	boolean existsByUserid(String userid);
 
-	boolean existsByFirstName(String firstName);
+	boolean existsByFirstname(String firstname);
 
-	boolean existsByLastName(String lastName);
+	boolean existsByLastname(String lastname);
 
 	boolean existsByEmail(String email);
 
-	SchoolUser findByUserId(String userId);
+	SchoolUser findByUserid(String userid);
 
 	SchoolUser findByEmail(String email);
 
-	SchoolUser findByLastName(String lastName);
+	SchoolUser findByLastname(String lastname);
 
-	SchoolUser findByFirstName(String firstName);
+	SchoolUser findByFirstname(String firstname);
 
 	List<SchoolUser> findAllByDesignation(String designation);
 
-	SchoolUser findByPhoneNumber(String phoneNumber);
+	SchoolUser findByPhonenumber(String phonenumber);
 
 }

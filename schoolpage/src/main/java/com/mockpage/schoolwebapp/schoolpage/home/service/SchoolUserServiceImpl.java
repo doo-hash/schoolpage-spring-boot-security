@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mockpage.schoolwebapp.schoolpage.home.model.Roles;
+import com.mockpage.schoolwebapp.schoolpage.home.model.Role;
 import com.mockpage.schoolwebapp.schoolpage.home.model.SchoolUser;
 import com.mockpage.schoolwebapp.schoolpage.home.repository.SchoolUserRepository;
 
@@ -28,11 +28,11 @@ public class SchoolUserServiceImpl implements ISchoolUserService {
 	public SchoolUser saveSchoolUser(SchoolUser newuser) {
 		System.out.println(newuser.toString());
 		String psd = passwordEncoder.encode(newuser.getPassword());
-		SchoolUser user = new SchoolUser(newuser.getFirstName(),newuser.getLastName(),
-				newuser.getEmail(),newuser.getPhoneNumber(),
-				newuser.getUserId(),newuser.getDesignation(),
+		SchoolUser user = new SchoolUser(newuser.getFirstname(),newuser.getLastname(),
+				newuser.getEmail(),newuser.getPhonenumber(),
+				newuser.getUserid(),newuser.getDesignation(),
 				psd,newuser.getRoles(),
-				newuser.isChecked());
+				newuser.isCheckterms());
 		System.out.println(user);
 		userRepo.save(user);
 		System.out.println(userRepo.getById(user.getId()));
@@ -40,20 +40,20 @@ public class SchoolUserServiceImpl implements ISchoolUserService {
 	}
 
 	@Override
-	public boolean existsByUserId(String userId) {
-		boolean isUserId = userRepo.existsByUserId(userId);
+	public boolean existsByUserId(String userid) {
+		boolean isUserId = userRepo.existsByUserid(userid);
 		return isUserId;
 	}
 
 	@Override
-	public boolean existsByFirstName(String firstName) {
-		boolean isFirstName = userRepo.existsByFirstName(firstName);
+	public boolean existsByFirstName(String firstname) {
+		boolean isFirstName = userRepo.existsByFirstname(firstname);
 		return isFirstName;
 	}
 
 	@Override
-	public boolean existsByLastName(String lastName) {
-		boolean isLastName = userRepo.existsByLastName(lastName);
+	public boolean existsByLastName(String lastname) {
+		boolean isLastName = userRepo.existsByLastname(lastname);
 		return isLastName;
 	}
 
@@ -64,20 +64,20 @@ public class SchoolUserServiceImpl implements ISchoolUserService {
 	}
 
 	@Override
-	public SchoolUser findUserByUserId(String userId) {
-		SchoolUser user = userRepo.findByUserId(userId);
+	public SchoolUser findUserByUserId(String userid) {
+		SchoolUser user = userRepo.findByUserid(userid);
 		return user;
 	}
 
 	@Override
-	public SchoolUser findUserByFirstName(String firstName) {
-		SchoolUser user = userRepo.findByFirstName(firstName);
+	public SchoolUser findUserByFirstName(String firstname) {
+		SchoolUser user = userRepo.findByFirstname(firstname);
 		return user;
 	}
 
 	@Override
-	public SchoolUser findUserByLastName(String lastName) {
-		SchoolUser user = userRepo.findByLastName(lastName);
+	public SchoolUser findUserByLastName(String lastname) {
+		SchoolUser user = userRepo.findByLastname(lastname);
 		return user;
 	}
 
@@ -88,8 +88,8 @@ public class SchoolUserServiceImpl implements ISchoolUserService {
 	}
 
 	@Override
-	public SchoolUser findUserByPhoneNumber(String phoneNumber) {
-		SchoolUser user = userRepo.findByPhoneNumber(phoneNumber);
+	public SchoolUser findUserByPhoneNumber(String phonenumber) {
+		SchoolUser user = userRepo.findByPhonenumber(phonenumber);
 		return user;
 	}
 	
@@ -100,8 +100,8 @@ public class SchoolUserServiceImpl implements ISchoolUserService {
 	}
 
 	@Override
-	public void deleteUser(String userId) {
-		SchoolUser user = userRepo.findByUserId(userId);
+	public void deleteUser(String userid) {
+		SchoolUser user = userRepo.findByUserid(userid);
 		userRepo.delete(user);
 	}
 
@@ -119,14 +119,14 @@ public class SchoolUserServiceImpl implements ISchoolUserService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		SchoolUser user = userRepo.findByUserId(username);
+		SchoolUser user = userRepo.findByUserid(username);
 		if(user == null) {
 			throw new UsernameNotFoundException("Invalid Username or password");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUserId(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+		return new org.springframework.security.core.userdetails.User(user.getUserid(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
 	}
 	
-	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Roles> roles){
+	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRolename())).collect(Collectors.toList());
 	}
 }

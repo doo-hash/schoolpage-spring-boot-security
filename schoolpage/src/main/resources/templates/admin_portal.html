@@ -37,9 +37,9 @@
         </svg>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a th:href="@{/home/admin/}+${admin.adminId}+@{/notifications}" class="dropdown-item">Notifications</a></li>
-          <li><a th:href="@{/home/admin/}+${admin.adminId}+@{/settings}" class="dropdown-item">Settings</a></li>
-          <li><a th:href="@{/home/admin/}+${admin.adminId}+@{/admin_logout}" class="dropdown-item">Logout</a></li>
+          <li><a th:href="@{/home/admin/notifications}" class="dropdown-item">Notifications</a></li>
+          <li><a th:href="@{/home/admin/settings}" class="dropdown-item">Settings</a></li>
+          <li><a th:href="@{/home/user/logout}" class="dropdown-item">Logout</a></li>
         </ul>
       </header>
     </div>
@@ -80,7 +80,7 @@
         <div class="tab-content" id="tabContent">
           <div class="tab-pane fade show active" id="all" role="tabpanel" 
           aria-labelledby="all-tab">
-            <h3 class="p-3 mb-2 text-center" th:text="WELCOME+${' '+admin.firstName}+${' '+admin.lastName}"></h3>
+            <h3 class="p-3 mb-2 text-center" th:text="WELCOME+${' '+admin.firstname}+${' '+admin.lastname}"></h3>
             <table class="table table-bordered table-striped text-center mb-5">
               <thead><tr><th>Number of teachers</th><th>Number of students</th>
                   <th>Messages</th></tr></thead>
@@ -217,12 +217,11 @@
             <table class="table table-bordered table-hover mb-2">
               <thead class="table-dark"><tr><th></th><th>Details</th></tr></thead>
               <tbody th:each="data : ${admin}">
-              <tr><td>Full Name</td><td th:text="${data.firstName+' '}+${data.lastName}"></td></tr>
+              <tr><td>Full Name</td><td th:text="${data.firstname+' '}+${data.lastname}"></td></tr>
               <tr><td>Designation</td><td th:text="${data.designation}"></td></tr>
               <tr><td>Email id</td><td th:text="${data.email}"></td></tr>
-              <tr><td>Your Id</td><td th:text="${data.adminId}"></td></tr>
-              <tr><td>Education Details</td><td th:text="${data.education}"></td></tr>
-              <tr><td>Work Experience</td><td th:text="${data.work_experience}"></td></tr>
+              <tr><td>Your Id</td><td th:text="${data.userid}"></td></tr>
+              <tr><td>phone Number</td><td th:text="${data.phonenumber}"></td></tr>
               </tbody>
           </table>
           </div>

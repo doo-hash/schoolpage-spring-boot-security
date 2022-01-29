@@ -39,38 +39,29 @@
 <!-- Sign Up -->
     <section class="cotainer-lg signup-layout">
         <div class="p-lg-2">
-		<div th:if="${param.success}" class="alert alert-info">You have successfully registered!!</div> 
+		<div th:if="${param.success}" class="alert alert-info px-5">You have successfully registered!!</div> 
+		<div th:if="${param.alreadyexists}" class="alert alert-info px-5">This id is already used!!</div> 
         <form class="px-5 pb-2" 
-        th:action="@{/home/register/save}" th:object="${user}" method="post">
+        th:action="@{/home/register/save}" th:object="${schooluser}" method="post">
           <div class="mb-1 row">
-            <label for="fname" class="col-form-label col-lg-3">First Name</label>
+            <label for="firstname" class="col-form-label col-lg-3">First Name</label>
             <div class="col-lg-9">
-              <input type="text" class="form-control" th:field="*{firstName}"
-              name="firstName" id="firstName" />
-        		<span th:if="${#fields.errors('firstName')}" th:errors="*{firstName}" class="text-danger fw-light"></span>
+              <input type="text" class="form-control" th:field="*{firstname}"
+              name="firstname" id="firstname" />
+        		<span th:if="${#fields.errors('firstname')}" th:errors="*{firstname}" class="text-danger fw-light"></span>
         		<span th:text="${fnamemsg}" class="text-danger fw-light"></span>
         	</div>
           </div>
           <div class="mb-1 row">
-            <label for="lname" class="col-form-label col-lg-3">Last Name</label>
+            <label for="lastname" class="col-form-label col-lg-3">Last Name</label>
             <div class="col-lg-9">
               <input type="text" class="form-control" 
-              th:field="*{lastName}" 
-              name="lastName" id="lastName" />
-               <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger fw-light"></span>
+              th:field="*{lastname}" 
+              name="lastname" id="lastname" />
+               <span th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="text-danger fw-light"></span>
                <span th:text="${lnamemsg}" class="text-danger fw-light"></span>
             </div>
           </div>
-          <div class="mb-1 row">
-            <label for="userId" class="col-form-label col-lg-3">User Id</label>
-            <div class="col-lg-9">
-              <input type="text" class="form-control" th:field="*{userId}" 
-              name="userId" id="userId" />
-               <span th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="text-danger fw-light"></span>
-               <span th:text="${useridmsg}" class="text-danger fw-light"></span>
-            </div>
-          </div>
-          
           <div class="mb-1 row">
             <label for="InputEmail" class="col-form-label col-lg-3">Email</label>
             <div class="col-lg-9">
@@ -82,15 +73,25 @@
           </div>
           
           <div class="mb-1 row">
-            <label for="phoneNumber" class="col-form-label col-lg-3">Phone Number</label>
+            <label for="phonenumber" class="col-form-label col-lg-3">Phone Number</label>
             <div class="col-1 col-lg-1">
             	<input type="text" class="form-control text-center" readonly="readonly" value="+1-" />
             	</div>
             	<div class="col-11 col-lg-8">
-              <input type="text" class="form-control" th:field="*{phoneNumber}" 
-              name="phoneNumber" id="phoneNumber" placeholder="012-345-6789"/>
-               <span th:if="${#fields.hasErrors('phoneNumber')}" 
-               th:errors="*{phoneNumber}" class="text-danger fw-light"></span>
+              <input type="text" class="form-control" th:field="*{phonenumber}" 
+              name="phonenumber" id="phonenumber" placeholder="012-345-6789"/>
+               <span th:if="${#fields.hasErrors('phonenumber')}" 
+               th:errors="*{phonenumber}" class="text-danger fw-light"></span>
+            </div>
+          </div>
+          
+          <div class="mb-1 row">
+            <label for="userid" class="col-form-label col-lg-3">User Id</label>
+            <div class="col-lg-9">
+              <input type="text" class="form-control" th:field="*{userid}" 
+              name="userid" id="userid" />
+               <span th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}" class="text-danger fw-light"></span>
+               <span th:text="${useridmsg}" class="text-danger fw-light"></span>
             </div>
           </div>
           
@@ -120,18 +121,18 @@
 			<input type="checkbox"  class="px-2 mx-3" 
         name="roles"
             th:each="data : ${userroles}"
-            th:text="${data}"
-            th:value="${data}"
+            th:text="${data.rolename}"
+            th:value="${data.id}"
             th:field="*{roles}"
         />
         </span>
 			</div>
 			</div>                  
           <div class="my-1 form-check">
-            <input type="checkbox" class="form-check-input" th:field="*{checked}"
-             name="checked" id="checked" />
+            <input type="checkbox" class="form-check-input" th:field="*{checkterms}"
+             name="checkterms" id="checked" />
             <label class="form-check-label" for="Check1"><span>Agree to <a href="/" >terms and conditions</a></span></label>
-            <span th:if="${#fields.hasErrors('checked')}" th:errors="*{checked}" 
+            <span th:if="${#fields.hasErrors('checkterms')}" th:errors="*{checkterms}" 
               class="text-danger fw-light"></span> 
           </div>
           <div class="g-recaptcha row py-2" th:attr="data-sitekey=${@captchaSettings.getSite()}">

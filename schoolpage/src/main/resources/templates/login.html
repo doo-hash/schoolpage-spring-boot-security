@@ -19,6 +19,7 @@
         <form th:action="@{/home/login/auth_user}" method="post">
 			<div th:if="${param.error}" class="alert alert-danger">Invalid UserId or Password</div>
 			<div th:if="${param.logout}" class="alert alert-info">You have been logged out</div>
+			<div th:if="${param.delete}" class="alert alert-info">You have been logged out</div>
           <div class="mb-3">
             <label for="username" class="form-label">User ID</label>
             <input type="text" class="form-control" name="username" id="username" 
