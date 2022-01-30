@@ -44,26 +44,24 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers("/","/home","/home/register","/home/register?succes","/js/**","/css/**","/images/**")
+		.antMatchers("/","/home","/home/register","/home/register?success","/js/**","/css/**","/images/**")
 		.permitAll()
 		.antMatchers("/home/about","/home/admissions",
 				"/home/news","/home/guidance","/home/employment",
 				"/home/blog","/home/academics/courses","/home/academics/departments",
 				"/home/calendar","/home/team","/home/contactus","/home/contactus/save",
-				"/home/activities",
+				"/home/activities","/home/blog/article/**",
 				"/home/news/articles/**",
-				"/home/register/save","/home/login/auth_user","/home/login?delete",
+				"/home/register/save","/home/login/auth_user",
 				"https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s")
 		.permitAll()
-		.antMatchers("/home/admin/**").access("hasAuthority('ADMIN') or hasAuthority('TEACHER') or hasAuthority('PARENT')")
+		.antMatchers("/home/admin/**","/home/admin/edit**").hasAuthority("ADMIN")
 		.antMatchers("/home/teacher/**")
 		.hasAuthority("TEACHER")
 		.antMatchers("/home/parent/**")
 		.hasAuthority("PARENT")
 		.antMatchers("/home/user/**")
 		.hasAuthority("USER")
-		.antMatchers("/home/blog/article/**")
-		.hasAnyAuthority("ADMIN","TEACHER","PARENT","USER")
 		.anyRequest().authenticated()
 		.and().formLogin()
 		.loginPage("/home/login")

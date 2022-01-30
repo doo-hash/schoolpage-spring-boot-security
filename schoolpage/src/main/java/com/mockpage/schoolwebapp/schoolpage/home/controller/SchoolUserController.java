@@ -56,93 +56,54 @@ import com.mockpage.schoolwebapp.schoolpage.home.validator.CaptchaValidator;
 			  @Valid @ModelAttribute("schooluser") SchoolUser user, 
 			  BindingResult result, 
 			  Model model) {
-		  
-		  model.addAttribute("roles",roleRepo.findAll());
+		  model.addAttribute("userroles",roleRepo.findAll());
 		  
 		  boolean isuserid = userservice.existsByUserId(user.getUserid());
 		  boolean isfname = userservice.existsByFirstName(user.getFirstname());
 		  boolean islname = userservice.existsByLastName(user.getLastname());
 		  boolean isemail = userservice.existsByEmail(user.getEmail());
-		  
 		  if(!result.hasErrors()) {
 			  if(captchavalidator.isValidate(captcha)) {
-				  if(isuserid || isfname || islname || isemail) { 
-					  System.out.println(isuserid);
-					  System.out.println(isfname);
-					  System.out.println(islname);
-					  System.out.println(isemail);
-					  if(isuserid) { 
-						  model.addAttribute("useridmsg","already exists!!"); 
-					  } 
-					  if(isfname) {
-						  model.addAttribute("fnamemsg","already exists!!"); 
-						  } 
-					  if(islname) {
-						  model.addAttribute("lnamemsg","already exists!!"); 
-						  } 
-					  if(isemail) {
-						  model.addAttribute("emailmsg","already exists!!"); 
-						  } 
-					  if(isuserid && isfname) { 
-						  model.addAttribute("useridmsg","already exists!!");
-						  model.addAttribute("fnamemsg","already exists!!"); 
-						  } 
-					  if(isuserid && islname) { 
-						  model.addAttribute("useridmsg","already exists!!");
-						  model.addAttribute("lnamemsg","already exists!!"); 
-						  } 
-					  if(isuserid && isemail) { 
-						  model.addAttribute("useridmsg","already exists!!");
-						  model.addAttribute("emailmsg","already exists!!"); 
-						  } 
-					  if(isfname && islname) {
-						  model.addAttribute("fnamemsg","already exists!!");
-						  model.addAttribute("lnamemsg","already exists!!"); 
-						  } 
-					  if(isemail && isfname) {
-						  model.addAttribute("emailmsg","already exists!!");
-						  model.addAttribute("fnamemsg","already exists!!"); 
-						  } 
-					  if(isemail && islname) {
-						  model.addAttribute("emailmsg","already exists!!");
-						  model.addAttribute("lnamemsg","already exists!!"); 
-						  } 
-					  if(isuserid && isfname && islname) { 
-						  model.addAttribute("useridmsg","already exists!!");
-						  model.addAttribute("fnamemsg","already exists!!");
-						  model.addAttribute("lnamemsg","already exists!!"); 
-						  } 
-					  if(isuserid && isfname && isemail) { 
-						  model.addAttribute("useridmsg","already exists!!");
-						  model.addAttribute("fnamemsg","already exists!!");
-						  model.addAttribute("emailmsg","already exists!!"); 
-						  } 
-					  if(isuserid && isemail && islname) { 
-						  model.addAttribute("useridmsg","already exists!!");
-						  model.addAttribute("emailmsg","already exists!!");
-						  model.addAttribute("lnamemsg","already exists!!"); 
-						  } 
-					  if(isemail && isfname && islname) { 
-						  model.addAttribute("emailmsg","already exists!!");
-						  model.addAttribute("fnamemsg","already exists!!");
-						  model.addAttribute("lnamemsg","already exists!!"); 
-						  } 
-					  if(isuserid && isfname && islname && isemail) { 
-						  model.addAttribute("useridmsg","already exists!!");
-						  model.addAttribute("fnamemsg","already exists!!");
-						  model.addAttribute("lnamemsg","already exists!!");
-						  model.addAttribute("emailmsg","already exists!!"); 
-					  } 
+				  if(user.getRoles().isEmpty()) {
+					  model.addAttribute("roleserr","Please Select your category.");
+					  
+					  if(isuserid || isfname || islname || isemail) { 
+					  if(isuserid) { model.addAttribute("useridmsg","already exists!!");} 
+					  if(isfname) { model.addAttribute("fnamemsg","already exists!!");} 
+					  if(islname) { model.addAttribute("lnamemsg","already exists!!");} 
+					  if(isemail) { model.addAttribute("emailmsg","already exists!!");} 
+					  if(isuserid && isfname) { model.addAttribute("useridmsg","already exists!!");
+						  model.addAttribute("fnamemsg","already exists!!");  } 
+					  if(isuserid && islname) { model.addAttribute("useridmsg","already exists!!");
+						  model.addAttribute("lnamemsg","already exists!!");} 
+					  if(isuserid && isemail) { model.addAttribute("useridmsg","already exists!!");
+						  model.addAttribute("emailmsg","already exists!!");} 
+					  if(isfname && islname) { model.addAttribute("fnamemsg","already exists!!");
+						  model.addAttribute("lnamemsg","already exists!!");} 
+					  if(isemail && isfname) { model.addAttribute("emailmsg","already exists!!");
+						  model.addAttribute("fnamemsg","already exists!!");} 
+					  if(isemail && islname) { model.addAttribute("emailmsg","already exists!!");
+						  model.addAttribute("lnamemsg","already exists!!"); } 
+					  if(isuserid && isfname && islname) { model.addAttribute("useridmsg","already exists!!");
+						  model.addAttribute("fnamemsg","already exists!!");model.addAttribute("lnamemsg","already exists!!"); } 
+					  if(isuserid && isfname && isemail) { model.addAttribute("useridmsg","already exists!!");model.addAttribute("fnamemsg","already exists!!");
+						  model.addAttribute("emailmsg","already exists!!"); } 
+					  if(isuserid && isemail && islname) {  model.addAttribute("useridmsg","already exists!!");
+						  model.addAttribute("emailmsg","already exists!!"); model.addAttribute("lnamemsg","already exists!!"); } 
+					  if(isemail && isfname && islname) { model.addAttribute("emailmsg","already exists!!");
+						  model.addAttribute("fnamemsg","already exists!!"); model.addAttribute("lnamemsg","already exists!!"); } 
+					  if(isuserid && isfname && islname && isemail) { model.addAttribute("useridmsg","already exists!!");
+						  model.addAttribute("fnamemsg","already exists!!"); model.addAttribute("lnamemsg","already exists!!");
+						  model.addAttribute("emailmsg","already exists!!"); }
+					  }
 					  return "userform";
 				  }
-
 				  userservice.saveSchoolUser(user);
 				  return "redirect:/home/register?success";
-			  }
+ 			  }
 			  model.addAttribute("captchaerr","Captcha not validated.");
 		  }
 			model.addAttribute("captchaerr","Captcha not validated.");
 			return "userform";
-		  }
- 
+	  } 
   }

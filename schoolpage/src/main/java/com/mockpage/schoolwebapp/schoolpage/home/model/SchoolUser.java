@@ -52,9 +52,6 @@ public class  SchoolUser{
 	@Size(min = 3, message = "User id cannot be less than 3 characters.")
 	private String userid;
 	
-	@NotBlank(message="Designation cannot be empty.")
-	@Pattern(regexp = "^[a-zA-Z\s]{2,50}", message = "Must contain only letters.")
-	@Size(min = 2, message = "Designation cannot be less than 2 characters.")
 	private String designation;
 	
 	@NotBlank(message="Password cannot be empty.")
@@ -79,7 +76,7 @@ public class  SchoolUser{
 			@NotBlank(message = "Email cannot be empty.") @Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Invalid email address.") @Email String email,
 			@NotBlank(message = "Phone number cannot be empty.") @Pattern(regexp = "^[0-9-]{12}", message = "Must contain only numbers.") @Size(min = 10, message = "Phone number cannot be less than 10 characters.") String phonenumber,
 			@NotBlank(message = "User id cannot be empty.") @Pattern(regexp = "^[a-zA-Z0-9-_]{2,50}", message = "Invalid characters.") @Size(min = 3, message = "User id cannot be less than 3 characters.") String userid,
-			@NotBlank(message = "Designation cannot be empty.") @Pattern(regexp = "^[a-zA-Z ]{2,50}", message = "Must contain only letters.") @Size(min = 2, message = "Designation cannot be less than 2 characters.") String designation,
+			String designation,
 			@NotBlank(message = "Password cannot be empty.") @Size(min = 8, message = "Password cannot be less than 8 characters.") String password,
 			Collection<Role> roles, @AssertTrue(message = "Please check before you proceed.") boolean checkterms) {
 		super();

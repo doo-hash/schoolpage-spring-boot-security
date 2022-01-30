@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Teacherupdate {
+public class  GuestUserupdate{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,56 +37,48 @@ public class Teacherupdate {
 	@Email(message = "Invalid email")
 	private String email;
 	
-	@NotEmpty(message = "Teacher Id cannot be empty")
-	private String teacherId;
-	
-	@NotBlank(message="Designation cannot be empty.")
-	@Pattern(regexp = "^[a-zA-Z\s]{2,50}", message = "Must contain only letters.")
-	@Size(min = 2, message = "Designation cannot be less than 2 characters.")
-	private String designation;
-	
+	@NotEmpty(message = "user Id cannot be empty")
+	private String userId;
+		
 	@Lob
 	@NotBlank(message = "Education details cannot be empty")
 	@Size(min=10,message = "Education details cannot be less than 10 characters")
 	private String education;
 	
 	@Lob
-	@NotBlank(message = "Work experience details cannot be empty")
-	@Size(min=10,message = "work experience details cannot be less than 10 characters")
-	private String work_experience;
-	
-	public Teacherupdate() {}
+	private String description;
 
-	
-	
-	public Teacherupdate(
+	public GuestUserupdate() {
+	}
+
+	public GuestUserupdate(
 			@Pattern(regexp = "^[a-zA-Z ]{2,40}", message = "Must contain only letters.") @NotBlank(message = "Firstname cannot be empty") @Size(min = 2, message = "Firstname must be more than 2 characters.") String firstName,
 			@Pattern(regexp = "^[a-zA-Z ]{2,40}", message = "Must contain only letters.") @NotBlank(message = "Lastname cannot be empty.") @Size(min = 2, message = "Lastname cannot be less than 2 characters.") String lastName,
 			@NotBlank(message = "Phone number cannot be empty.") @Pattern(regexp = "^[0-9-]{12}", message = "Must contain only numbers.") @Size(min = 10, message = "Phone number cannot be less than 10 characters.") String phonenumber,
 			@NotEmpty(message = "Email is Mandatory") @Email(message = "Invalid email") String email,
-			@NotEmpty(message = "Teacher Id cannot be empty") String teacherId,
-			@NotBlank(message = "Designation cannot be empty.") @Pattern(regexp = "^[a-zA-Z ]{2,50}", message = "Must contain only letters.") @Size(min = 2, message = "Designation cannot be less than 2 characters.") String designation,
+			@NotEmpty(message = "user Id cannot be empty") String userId,
 			@NotBlank(message = "Education details cannot be empty") @Size(min = 10, message = "Education details cannot be less than 10 characters") String education,
-			@NotBlank(message = "Work experience details cannot be empty") @Size(min = 10, message = "work experience details cannot be less than 10 characters") String work_experience) {
+			String description) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phonenumber = phonenumber;
 		this.email = email;
-		this.teacherId = teacherId;
-		this.designation = designation;
+		this.userId = userId;
 		this.education = education;
-		this.work_experience = work_experience;
+		this.description = description;
 	}
 
 
 
 	@Override
 	public String toString() {
-		return "Teacherupdate [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", phonenumber="
-				+ phonenumber + ", email=" + email + ", teacherId=" + teacherId + ", designation=" + designation
-				+ ", education=" + education + ", work_experience=" + work_experience + "]";
+		return "GuestUserupdate [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", phonenumber="
+				+ phonenumber + ", email=" + email + ", userId=" + userId + ", education=" + education + ", "
+						+ "description=" + description + "]";
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -128,20 +120,12 @@ public class Teacherupdate {
 		this.email = email;
 	}
 
-	public String getTeacherId() {
-		return teacherId;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setTeacherId(String teacherId) {
-		this.teacherId = teacherId;
-	}
-
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getEducation() {
@@ -152,14 +136,13 @@ public class Teacherupdate {
 		this.education = education;
 	}
 
-	public String getWork_experience() {
-		return work_experience;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setWork_experience(String work_experience) {
-		this.work_experience = work_experience;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	 
-
+	
 }
