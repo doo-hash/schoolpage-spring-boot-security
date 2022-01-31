@@ -50,7 +50,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 				"/home/news","/home/guidance","/home/employment",
 				"/home/blog","/home/academics/courses","/home/academics/departments",
 				"/home/calendar","/home/team","/home/contactus","/home/contactus/save",
-				"/home/activities","/home/blog/article/**",
+				"/home/activities",
 				"/home/news/articles/**",
 				"/home/register/save","/home/login/auth_user",
 				"https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s")
@@ -62,6 +62,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 		.hasAuthority("PARENT")
 		.antMatchers("/home/user/**")
 		.hasAuthority("USER")
+		.antMatchers("/home/blog/article/**").hasAnyAuthority("ADMIN","TEACHER","PARENT","USER")
 		.anyRequest().authenticated()
 		.and().formLogin()
 		.loginPage("/home/login")

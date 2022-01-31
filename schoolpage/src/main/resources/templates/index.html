@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:fragment ="baseheader">
 <meta charset="ISO-8859-1">
 <title> School Mock Page</title>
@@ -62,8 +62,10 @@
               1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </svg>
 			</span> 
-            <a class="px-2 text-decoration-none logo-block-item" href="/home/register">Sign Up</a> 
-			<a class="px-2 text-decoration-none logo-block-item" href="/home/login">Sign In</a> 
+            <a class="px-2 text-decoration-none logo-block-item" th:href="@{/home/register}" sec:authorize="!isAuthenticated()">Sign Up</a>
+            <a class="px-2 text-decoration-none logo-block-item" th:href="@{/home/}+${userrole}+@{/portal}" sec:authorize="isAuthenticated()">My portal</a> 
+			<a class="px-2 text-decoration-none logo-block-item" href="/home/login" sec:authorize="!isAuthenticated()">Sign In</a>
+			<a class="px-2 text-decoration-none logo-block-item" th:href="@{/home/}+${userrole}+@{/logout}" sec:authorize="isAuthenticated()">Sign Out</a> 
 			<a class="px-2 d-none d-lg-inline text-decoration-none logo-block-item" href="/home/contactus">CONTACT US</a>
 		</div>
 </div>
@@ -110,8 +112,10 @@
               1-11 0 5.5 5.5 0 0 1 11 0z"/>
                 </svg>
           </span>
-          <span class="px-2 main-nav-item" ><a href="/home/register">Sign Up</a></span>
-          <span class="px-2 main-nav-item" ><a href="/home/login">Sign In</a></span>
+          <span class="px-2 main-nav-item" ><a th:href="@{/home/register}" sec:authorize="!isAuthenticated()">Sign Up</a></span>
+          <span class="px-2 main-nav-item" ><a th:href="@{/home/login}" sec:authorize="!isAuthenticated()">Sign In</a></span>
+          <span class="px-2 main-nav-item" ><a th:href="@{/home/}+${userrole}+@{/portal}" sec:authorize="isAuthenticated()">My Portal</a></span>
+          <span class="px-2 main-nav-item" ><a th:href="@{/home/}+${userrole}+@{/logout}" sec:authorize="isAuthenticated()">Sign out</a></span>
         </div>
         <div class="collapse navbar-collapse py-lg-2 px-2" id="navbarSupportedContent">
           <ul class="navbar-nav nav-fill text-center m-0 p-lg-0 main-nav-block">
