@@ -1,17 +1,13 @@
 package com.mockpage.schoolwebapp.schoolpage.home;
 
 
-import java.time.LocalDate;
-
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.mockpage.schoolwebapp.schoolpage.home.model.Admissions;
-import com.mockpage.schoolwebapp.schoolpage.home.model.Courses;
-import com.mockpage.schoolwebapp.schoolpage.home.model.Role;
 import com.mockpage.schoolwebapp.schoolpage.home.repository.AdmissionsRepository;
 import com.mockpage.schoolwebapp.schoolpage.home.repository.CoursesRepository;
 import com.mockpage.schoolwebapp.schoolpage.home.repository.RoleRepository;
@@ -19,7 +15,7 @@ import com.mockpage.schoolwebapp.schoolpage.home.repository.RoleRepository;
 @SpringBootApplication
 public class SchoolpageApplication {
 	
-	private static final org.slf4j.Logger log = LoggerFactory.getLogger(SchoolpageApplication.class);
+	private static final Logger log = LoggerFactory.getLogger(SchoolpageApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(SchoolpageApplication.class, args);

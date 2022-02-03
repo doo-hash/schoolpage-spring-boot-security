@@ -238,7 +238,7 @@ public class LoginController{
 				if(isfname && islname) { model.addAttribute("fnamemsg","already exists!!");
 				model.addAttribute("lnamemsg","already exists!!");} 
 				model.addAttribute("lnamemsg","already exists!!"); 
-				return "adminedit";	
+				return "teacheredit";	
 			}
 	
 			System.out.println(teacherupdate);
@@ -297,7 +297,7 @@ public class LoginController{
 				if(isfname && islname) { model.addAttribute("fnamemsg","already exists!!");
 				model.addAttribute("lnamemsg","already exists!!");} 
 				model.addAttribute("lnamemsg","already exists!!"); 
-				return "adminedit";	
+				return "parentedit";	
 			}
 	
 			System.out.println(parentupdate);
@@ -356,7 +356,7 @@ public class LoginController{
 				if(isfname && islname) { model.addAttribute("fnamemsg","already exists!!");
 				model.addAttribute("lnamemsg","already exists!!");} 
 				model.addAttribute("lnamemsg","already exists!!"); 
-				return "adminedit";	
+				return "useredit";	
 			}
 	
 			System.out.println(userupdate);
