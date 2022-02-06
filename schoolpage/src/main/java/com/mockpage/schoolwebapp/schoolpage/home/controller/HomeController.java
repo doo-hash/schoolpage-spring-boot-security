@@ -27,7 +27,7 @@ public class HomeController {
 	@ModelAttribute("userrole")
 	public String userRole(Authentication authentication) {
 		String userrole = null;
-		if(authentication.isAuthenticated()) {
+		if(authentication != null) {
 			String userid = authentication.getName();
 			SchoolUser user = userservice.findUserByUserId(userid);
 			SchoolUser userbyemail = userservice.findUserByEmail(userid);
