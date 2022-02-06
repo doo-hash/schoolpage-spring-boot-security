@@ -10,4 +10,8 @@ public interface ITeacherService {
 	public List<Teacherupdate> findAll();
 
 	public void update(Teacherupdate Teacherupdate);
+
+	public Teacherupdate findByEmail(String email);
+
+	public Teacherupdate findByTeacherId(String teacherid);
 }

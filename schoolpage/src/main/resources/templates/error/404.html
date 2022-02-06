@@ -30,11 +30,10 @@
         	<tr class="p-2"><td>Date</td><td th:text ="${timestamp}"></td></tr>
         	<tr class="p-2"><td>Path</td><td th:text="${path}"></td></tr>
         	<tr class="p-2"><td>Status Code</td><td th:text="${status}"></td></tr>
-        	<tr class="p-2"><td>Error</td><td th:text="${error}"></td></tr>
         	<tr class="p-2"><td>Exception</td><td th:text ="${exception}"></td></tr>
         	<tr class="p-2"><td>Message</td><td th:text="${message}"></td></tr>
     </table>
-        <a  class="p-2 mx-5 text-decoration-none"  href="/home">Back to Home page.</a>
+		   <div> <a  class="p-2 mx-5 text-decoration-none"  href="/home">Back to Home page.</a></div>
 </section>
 	<div th:insert = "~{/index :: footer}"></div>
 </body>

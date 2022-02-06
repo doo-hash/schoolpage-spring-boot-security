@@ -83,8 +83,15 @@ public class LoginController{
 	@GetMapping("/admin/portal")
 	public String adminPortal(Authentication authentication,Model model) {
 		String userid = authentication.getName();
+		
 		SchoolUser admin = userservice.findUserByUserId(userid); 
-		model.addAttribute("admin",admin);
+		SchoolUser adminbyemail = userservice.findUserByEmail(userid);
+		if(admin != null) {
+			model.addAttribute("admin",admin);
+		}
+		if(adminbyemail != null) {
+			model.addAttribute("admin",adminbyemail);
+		}
 		return "admin_portal";
 	}
 	
@@ -92,7 +99,13 @@ public class LoginController{
 	public String parentPortal(Authentication authentication,Model model) {
 		String userid = authentication.getName();
 		SchoolUser parent = userservice.findUserByUserId(userid); 
-		model.addAttribute("parent",parent);
+		SchoolUser parentbyemail = userservice.findUserByEmail(userid);
+		if(parent != null) {
+			model.addAttribute("parent",parent);
+		}
+		if(parentbyemail != null) {
+			model.addAttribute("parent",parentbyemail);
+		}
 		return "parent_portal";
 	}
 
@@ -100,7 +113,13 @@ public class LoginController{
 	public String teacherPortal(Authentication authentication,Model model) {
 		String userid = authentication.getName();
 		SchoolUser teacher = userservice.findUserByUserId(userid); 
-		model.addAttribute("teacher",teacher);
+		SchoolUser teacherbyemail = userservice.findUserByEmail(userid);
+		if(teacher != null) {
+			model.addAttribute("teacher",teacher);
+		}
+		if(teacherbyemail != null) {
+			model.addAttribute("teacher",teacherbyemail);
+		}
 		return "teacher_portal";
 	}
 	
@@ -108,7 +127,13 @@ public class LoginController{
 	public String userPortal(Authentication authentication,Model model) {
 		String userid = authentication.getName();
 		SchoolUser user = userservice.findUserByUserId(userid); 
-		model.addAttribute("user",user);
+		SchoolUser userbyemail = userservice.findUserByEmail(userid);
+		if(user != null) {
+			model.addAttribute("user",user);
+		}
+		if(userbyemail != null) {
+			model.addAttribute("user",userbyemail);
+		}
 		return "userportal";
 	}
 	
@@ -116,7 +141,13 @@ public class LoginController{
 	public String usernotification(@PathVariable String userrole,Authentication authentication,Model model) {
 		String userid = authentication.getName();
 		SchoolUser user = userservice.findUserByUserId(userid); 
-		model.addAttribute("user",user);
+		SchoolUser userbyemail = userservice.findUserByEmail(userid);
+		if(user != null) {
+			model.addAttribute("user",user);
+		}
+		if(userbyemail != null) {
+			model.addAttribute("user",userbyemail);
+		}
 		model.addAttribute("userrole",userrole);
 		return "notifications";
 	}
@@ -125,7 +156,13 @@ public class LoginController{
 	public String usersettings(@PathVariable String userrole,Authentication authentication,Model model) {
 		String userid = authentication.getName();
 		SchoolUser user = userservice.findUserByUserId(userid); 
-		model.addAttribute("user",user);
+		SchoolUser userbyemail = userservice.findUserByEmail(userid);
+		if(user != null) {
+			model.addAttribute("user",user);
+		}
+		if(userbyemail != null) {
+			model.addAttribute("user",userbyemail);
+		}
 		model.addAttribute("userrole",userrole);
 		return "settings";
 	}
@@ -133,27 +170,48 @@ public class LoginController{
 	@GetMapping("/admin/edit")
 	public String adminUpdate(Authentication authentication,Model model) {
 		String userid = authentication.getName();
-		System.out.println(userid);
 		SchoolUser user = userservice.findUserByUserId(userid); 
-		System.out.println(user);
-		model.addAttribute("admin",new Adminupdate(user.getFirstname(),user.getLastname(),user.getPhonenumber(),
+		SchoolUser userbyemail = userservice.findUserByEmail(userid);
+		Adminupdate admin = adminservice.findByAdminId(userid);
+		Adminupdate adminbyemail = adminservice.findByEmail(userid);
+		
+		if(user != null) {
+			if(admin == null) {
+				model.addAttribute("admin",new Adminupdate(user.getFirstname(),user.getLastname(),user.getPhonenumber(),
 				user.getEmail(),user.getUserid(),user.getDesignation(),null,null));
+			}else {
+			model.addAttribute("admin",new Adminupdate(user.getFirstname(),user.getLastname(),user.getPhonenumber(),
+					user.getEmail(),user.getUserid(),user.getDesignation(),admin.getEducation(),admin.getWork_experience()));
+			}
+		}
+		if(userbyemail != null) {
+			if(adminbyemail == null) {
+				model.addAttribute("admin",new Adminupdate(userbyemail.getFirstname(),userbyemail.getLastname(),userbyemail.getPhonenumber(),
+					userbyemail.getEmail(),userbyemail.getUserid(),userbyemail.getDesignation(),null,null));
+			}
+			else {
+			model.addAttribute("admin",new Adminupdate(userbyemail.getFirstname(),userbyemail.getLastname(),
+					userbyemail.getPhonenumber(),
+					userbyemail.getEmail(),userbyemail.getUserid(),
+					userbyemail.getDesignation(),adminbyemail.getEducation(),adminbyemail.getWork_experience()));
+			}
+		}
 		return "adminedit";
 	}
 	
 	@PostMapping("/admin/update")
-	public String updateAdmin(Authentication authentication,
+	public String updateAdmin(
 			@Valid @ModelAttribute("admin") Adminupdate adminupdate,
 			BindingResult result,
 			Model model) {
 		
-		String userid = authentication.getName();
+		String userid = adminupdate.getAdminId();
 		SchoolUser user = userservice.findUserByUserId(userid); 
 		
-		String firstName = adminupdate.getFirstName(); 
-		String lastName = adminupdate.getLastName(); 
-		boolean isfname = false;  
-		boolean islname = false;
+		String email = adminupdate.getEmail(); 
+		String phone = adminupdate.getPhonenumber(); 
+		boolean isemail = false;  
+		boolean isphone = false;
 		
 		List<SchoolUser> allusers = userservice.findAllUsers(); 
 		List<SchoolUser> remainingusers = new ArrayList<>();
@@ -165,20 +223,19 @@ public class LoginController{
 		} 
 		
 		for(SchoolUser userobj : remainingusers) {
-			if(firstName.equals(userobj.getFirstname().toString())) { 
-				isfname = true; 
+			if(email.equals(userobj.getEmail().toString())) { 
+				isemail = true; 
 			} 
-			if(lastName.equals(userobj.getLastname().toString())) { 
-				islname = true; 
+			if(phone.equals(userobj.getPhonenumber().toString())) { 
+				isphone = true; 
 			} 
 		} 
 		if(!result.hasErrors()) { 
-			if(isfname || islname) { 
-				if(isfname) { model.addAttribute("fnamemsg","already exists!!");} 
-				if(islname) { model.addAttribute("lnamemsg","already exists!!");} 
-				if(isfname && islname) { model.addAttribute("fnamemsg","already exists!!");
-				model.addAttribute("lnamemsg","already exists!!");} 
-				model.addAttribute("lnamemsg","already exists!!"); 
+			if(isemail || isphone) { 
+				if(isemail) { model.addAttribute("emailmsg","already exists!!");} 
+				if(isphone) { model.addAttribute("phonemsg","already exists!!");} 
+				if(isemail && isphone) { model.addAttribute("emailmsg","already exists!!");
+				model.addAttribute("phoneemsg","already exists!!");} 
 				return "adminedit";	
 			}
 	
@@ -192,27 +249,52 @@ public class LoginController{
 	@GetMapping("/teacher/edit")
 	public String teacherUpdate(Authentication authentication,Model model) {
 		String userid = authentication.getName();
-		System.out.println(userid);
 		SchoolUser user = userservice.findUserByUserId(userid); 
-		System.out.println(user);
-		model.addAttribute("teacher",new Teacherupdate(user.getFirstname(),user.getLastname(),user.getPhonenumber(),
+		SchoolUser userbyemail = userservice.findUserByEmail(userid);
+		Teacherupdate teacher = teacherservice.findByTeacherId(userid);
+		Teacherupdate teacherbyemail = teacherservice.findByEmail(userid);
+		
+		if(user != null) {
+			if(teacher == null) {
+				model.addAttribute("teacher",new Teacherupdate(user.getFirstname(),user.getLastname(),user.getPhonenumber(),
 				user.getEmail(),user.getUserid(),user.getDesignation(),null,null));
+			}
+			else {
+			model.addAttribute("teacher",new Teacherupdate(user.getFirstname(),user.getLastname(),
+					user.getPhonenumber(),
+					user.getEmail(),user.getUserid(),user.getDesignation(),
+					teacher.getEducation(),teacher.getWork_experience()));
+			}
+		}
+		if(userbyemail != null) {
+			if(teacherbyemail == null) {
+				model.addAttribute("teacher",new Teacherupdate(userbyemail.getFirstname(),
+					userbyemail.getLastname(),userbyemail.getPhonenumber(),
+				userbyemail.getEmail(),userbyemail.getUserid(),userbyemail.getDesignation(),null,null));
+			}
+			else {
+			model.addAttribute("teacher",new Teacherupdate(userbyemail.getFirstname(),
+					userbyemail.getLastname(),userbyemail.getPhonenumber(),
+				userbyemail.getEmail(),userbyemail.getUserid(),userbyemail.getDesignation(),
+				teacherbyemail.getEducation(),teacherbyemail.getWork_experience()));
+			}
+		}
 		return "teacheredit";
 	}
 	
 	@PostMapping("/teacher/update")
-	public String updateTeacher(Authentication authentication,
+	public String updateTeacher(
 			@Valid @ModelAttribute("teacher") Teacherupdate teacherupdate,
 			BindingResult result,
 			Model model) {
 		
-		String userid = authentication.getName();
+		String userid = teacherupdate.getTeacherId();
 		SchoolUser user = userservice.findUserByUserId(userid); 
 		
-		String firstName = teacherupdate.getFirstName(); 
-		String lastName = teacherupdate.getLastName(); 
-		boolean isfname = false;  
-		boolean islname = false;
+		String email = teacherupdate.getEmail(); 
+		String phone = teacherupdate.getPhonenumber(); 
+		boolean isemail = false;  
+		boolean isphone = false;
 		
 		List<SchoolUser> allusers = userservice.findAllUsers(); 
 		List<SchoolUser> remainingusers = new ArrayList<>();
@@ -224,20 +306,19 @@ public class LoginController{
 		} 
 		
 		for(SchoolUser userobj : remainingusers) {
-			if(firstName.equals(userobj.getFirstname().toString())) { 
-				isfname = true; 
+			if(email.equals(userobj.getEmail().toString())) { 
+				isemail = true; 
 			} 
-			if(lastName.equals(userobj.getLastname().toString())) { 
-				islname = true; 
+			if(phone.equals(userobj.getPhonenumber().toString())) { 
+				isphone = true; 
 			} 
 		} 
 		if(!result.hasErrors()) { 
-			if(isfname || islname) { 
-				if(isfname) { model.addAttribute("fnamemsg","already exists!!");} 
-				if(islname) { model.addAttribute("lnamemsg","already exists!!");} 
-				if(isfname && islname) { model.addAttribute("fnamemsg","already exists!!");
-				model.addAttribute("lnamemsg","already exists!!");} 
-				model.addAttribute("lnamemsg","already exists!!"); 
+			if(isemail || isphone) { 
+				if(isemail) { model.addAttribute("emailmsg","already exists!!");} 
+				if(isphone) { model.addAttribute("phonemsg","already exists!!");} 
+				if(isemail && isphone) { model.addAttribute("emailmsg","already exists!!");
+				model.addAttribute("phoneemsg","already exists!!");} 
 				return "teacheredit";	
 			}
 	
@@ -251,27 +332,56 @@ public class LoginController{
 	@GetMapping("/parent/edit")
 	public String parentUpdate(Authentication authentication,Model model) {
 		String userid = authentication.getName();
-		System.out.println(userid);
+		
 		SchoolUser user = userservice.findUserByUserId(userid); 
-		System.out.println(user);
-		model.addAttribute("parent",new Parentupdate(user.getFirstname(),user.getLastname(),user.getPhonenumber(),
-				user.getEmail(),user.getUserid(),null));
+		SchoolUser userbyemail = userservice.findUserByEmail(userid);
+		Parentupdate parent = parentservice.findByParentId(userid);
+		Parentupdate parentbyemail = parentservice.findByEmail(userid);
+		
+		if(user != null) {
+			if(parent == null) {
+				model.addAttribute("parent",new Parentupdate(user.getFirstname(),
+						user.getLastname(),
+						user.getPhonenumber(),
+						user.getEmail(),
+						user.getUserid(),null));
+			}
+			else {
+				model.addAttribute("parent",new Parentupdate(user.getFirstname(),
+						user.getLastname(),
+						user.getPhonenumber(),
+						user.getEmail(),
+						user.getUserid(),
+						parent.getStudentName()));
+			}
+		}
+		if(userbyemail != null) {
+			if(parentbyemail == null) {
+				model.addAttribute("parent",new Parentupdate(userbyemail.getFirstname(),
+					userbyemail.getLastname(),userbyemail.getPhonenumber(),
+					userbyemail.getEmail(),userbyemail.getUserid(),null));
+			}
+			else {
+			model.addAttribute("parent",new Parentupdate(userbyemail.getFirstname(),
+					userbyemail.getLastname(),userbyemail.getPhonenumber(),
+					userbyemail.getEmail(),userbyemail.getUserid(),parentbyemail.getStudentName()));
+			}
+		}
 		return "parentedit";
 	}
 	
 	@PostMapping("/parent/update")
-	public String updateParent(Authentication authentication,
+	public String updateParent(
 			@Valid @ModelAttribute("parent") Parentupdate parentupdate,
 			BindingResult result,
 			Model model) {
 		
-		String userid = authentication.getName();
+		String userid = parentupdate.getParentId();
 		SchoolUser user = userservice.findUserByUserId(userid); 
-		
-		String firstName = parentupdate.getFirstName(); 
-		String lastName = parentupdate.getLastName(); 
-		boolean isfname = false;  
-		boolean islname = false;
+		String email = parentupdate.getEmail(); 
+		String phone = parentupdate.getPhonenumber(); 
+		boolean isemail = false;  
+		boolean isphone = false;
 		
 		List<SchoolUser> allusers = userservice.findAllUsers(); 
 		List<SchoolUser> remainingusers = new ArrayList<>();
@@ -283,22 +393,22 @@ public class LoginController{
 		} 
 		
 		for(SchoolUser userobj : remainingusers) {
-			if(firstName.equals(userobj.getFirstname().toString())) { 
-				isfname = true; 
+			if(email.equals(userobj.getEmail().toString())) { 
+				isemail = true; 
 			} 
-			if(lastName.equals(userobj.getLastname().toString())) { 
-				islname = true; 
+			if(phone.equals(userobj.getPhonenumber().toString())) { 
+				isphone = true; 
 			} 
 		} 
 		if(!result.hasErrors()) { 
-			if(isfname || islname) { 
-				if(isfname) { model.addAttribute("fnamemsg","already exists!!");} 
-				if(islname) { model.addAttribute("lnamemsg","already exists!!");} 
-				if(isfname && islname) { model.addAttribute("fnamemsg","already exists!!");
-				model.addAttribute("lnamemsg","already exists!!");} 
-				model.addAttribute("lnamemsg","already exists!!"); 
+			if(isemail || isphone) { 
+				if(isemail) { model.addAttribute("emailmsg","already exists!!");} 
+				if(isphone) { model.addAttribute("phonemsg","already exists!!");} 
+				if(isemail && isphone) { model.addAttribute("emailmsg","already exists!!");
+				model.addAttribute("phoneemsg","already exists!!");} 
 				return "parentedit";	
 			}
+
 	
 			System.out.println(parentupdate);
 			parentservice.update(parentupdate);
@@ -310,27 +420,49 @@ public class LoginController{
 	@GetMapping("/user/edit")
 	public String guestUserUpdate(Authentication authentication,Model model) {
 		String userid = authentication.getName();
-		System.out.println(userid);
 		SchoolUser user = userservice.findUserByUserId(userid); 
-		System.out.println(user);
-		model.addAttribute("guestuser",new GuestUserupdate(user.getFirstname(),user.getLastname(),user.getPhonenumber(),
+		SchoolUser userbyemail = userservice.findUserByEmail(userid);
+		GuestUserupdate guestuser = guestuserservice.findByUserId(userid);
+		GuestUserupdate guestuserbyemail = guestuserservice.findByEmail(userid);
+		if(user != null) {
+			if(guestuser == null) {
+				model.addAttribute("guestuser",new GuestUserupdate(user.getFirstname(),
+						user.getLastname(),user.getPhonenumber(),
 				user.getEmail(),user.getUserid(),null,null));
+			}else {
+			model.addAttribute("guestuser",new GuestUserupdate(user.getFirstname(),
+					user.getLastname(),user.getPhonenumber(),
+			user.getEmail(),user.getUserid(),guestuser.getEducation(),guestuser.getDescription()));
+			}
+		}
+		if(userbyemail != null) {
+			if(guestuserbyemail == null) {
+				model.addAttribute("guestuser",new GuestUserupdate(userbyemail.getFirstname(),
+					userbyemail.getLastname(),userbyemail.getPhonenumber(),
+					userbyemail.getEmail(),userbyemail.getUserid(),null,null));
+			}else {
+			model.addAttribute("guestuser",new GuestUserupdate(userbyemail.getFirstname(),
+					userbyemail.getLastname(),userbyemail.getPhonenumber(),
+					userbyemail.getEmail(),userbyemail.getUserid(),guestuserbyemail.getEducation(),
+					guestuserbyemail.getDescription()));
+			}
+		}
 		return "useredit";
 	}
 	
 	@PostMapping("/user/update")
-	public String updateUserGuest(Authentication authentication,
+	public String updateUserGuest(
 			@Valid @ModelAttribute("guestuser") GuestUserupdate userupdate,
 			BindingResult result,
 			Model model) {
 		
-		String userid = authentication.getName();
+		String userid = userupdate.getUserId();
 		SchoolUser user = userservice.findUserByUserId(userid); 
 		
-		String firstName = userupdate.getFirstName(); 
-		String lastName = userupdate.getLastName(); 
-		boolean isfname = false;  
-		boolean islname = false;
+		String email = userupdate.getEmail(); 
+		String phone = userupdate.getPhonenumber(); 
+		boolean isemail = false;  
+		boolean isphone = false;
 		
 		List<SchoolUser> allusers = userservice.findAllUsers(); 
 		List<SchoolUser> remainingusers = new ArrayList<>();
@@ -342,22 +474,22 @@ public class LoginController{
 		} 
 		
 		for(SchoolUser userobj : remainingusers) {
-			if(firstName.equals(userobj.getFirstname().toString())) { 
-				isfname = true; 
+			if(email.equals(userobj.getEmail().toString())) { 
+				isemail = true; 
 			} 
-			if(lastName.equals(userobj.getLastname().toString())) { 
-				islname = true; 
+			if(phone.equals(userobj.getPhonenumber().toString())) { 
+				isphone = true; 
 			} 
 		} 
 		if(!result.hasErrors()) { 
-			if(isfname || islname) { 
-				if(isfname) { model.addAttribute("fnamemsg","already exists!!");} 
-				if(islname) { model.addAttribute("lnamemsg","already exists!!");} 
-				if(isfname && islname) { model.addAttribute("fnamemsg","already exists!!");
-				model.addAttribute("lnamemsg","already exists!!");} 
-				model.addAttribute("lnamemsg","already exists!!"); 
+			if(isemail || isphone) { 
+				if(isemail) { model.addAttribute("emailmsg","already exists!!");} 
+				if(isphone) { model.addAttribute("phonemsg","already exists!!");} 
+				if(isemail && isphone) { model.addAttribute("emailmsg","already exists!!");
+				model.addAttribute("phoneemsg","already exists!!");} 
 				return "useredit";	
 			}
+
 	
 			System.out.println(userupdate);
 			guestuserservice.update(userupdate);

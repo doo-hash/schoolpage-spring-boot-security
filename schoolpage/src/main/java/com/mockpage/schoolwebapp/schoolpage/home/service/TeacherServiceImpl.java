@@ -12,36 +12,62 @@ import com.mockpage.schoolwebapp.schoolpage.home.repository.UserTeacherRepositor
 @Service
 public class TeacherServiceImpl implements ITeacherService {
 
-	private UserTeacherRepository TeacherRepo;
+	private UserTeacherRepository teacherRepo;
 	private SchoolUserRepository userRepo;
 	
-	public TeacherServiceImpl(UserTeacherRepository TeacherRepo, SchoolUserRepository userRepo) {
+	public TeacherServiceImpl(UserTeacherRepository teacherRepo, SchoolUserRepository userRepo) {
 		super();
-		this.TeacherRepo = TeacherRepo;
+		this.teacherRepo = teacherRepo;
 		this.userRepo = userRepo;
 	}
 
 
 	@Override
 	public List<Teacherupdate> findAll() {
-		List<Teacherupdate> findAllTeachers = TeacherRepo.findAll();
+		List<Teacherupdate> findAllTeachers = teacherRepo.findAll();
 		return findAllTeachers;
 	}
 
 
 	@Override
-	public void update(Teacherupdate Teacherupdate) {
-		System.out.println(Teacherupdate);
-		TeacherRepo.save(Teacherupdate);
-		SchoolUser updateUser = userRepo.findByUserid(Teacherupdate.getTeacherId());
-		System.out.println(updateUser);
-		updateUser.setFirstname(Teacherupdate.getFirstName());
-		updateUser.setLastname(Teacherupdate.getLastName());
-		updateUser.setPhonenumber(Teacherupdate.getPhonenumber());
-		updateUser.setDesignation(Teacherupdate.getDesignation());
-		System.out.println(updateUser);
-		userRepo.save(updateUser);
-		System.out.println(userRepo.findByUserid(updateUser.getUserid()));
+	public void update(Teacherupdate teacherupdate) {
+		
+		SchoolUser user = userRepo.findByUserid(teacherupdate.getTeacherId());
+		Teacherupdate teacher = teacherRepo.findByTeacherId(teacherupdate.getTeacherId());
+		
+		
+		if(teacher == null) {
+			teacherRepo.save(teacherupdate);
+		}
+		else {	
+			teacher.setFirstName(teacherupdate.getFirstName());
+			teacher.setLastName(teacherupdate.getLastName());
+			teacher.setPhonenumber(teacherupdate.getPhonenumber());
+			teacher.setEmail(teacherupdate.getEmail());
+			teacher.setTeacherId(teacherupdate.getTeacherId());
+			teacher.setEducation(teacherupdate.getEducation());
+			teacher.setWork_experience(teacherupdate.getWork_experience());
+			teacherRepo.save(teacher);
+		}
+		user.setEmail(teacherupdate.getEmail());
+		user.setPhonenumber(teacherupdate.getPhonenumber());
+		user.setDesignation(teacherupdate.getDesignation());
+		userRepo.save(user);
+
+		}
+
+
+	@Override
+	public Teacherupdate findByEmail(String email) {
+		Teacherupdate teacher = teacherRepo.findByEmail(email);
+		return teacher;
+	}
+
+
+	@Override
+	public Teacherupdate findByTeacherId(String teacherid) {
+		Teacherupdate teacher = teacherRepo.findByTeacherId(teacherid);
+		return teacher;
 	}
 
 }

@@ -27,26 +27,49 @@ public class HomeController {
 	@ModelAttribute("userrole")
 	public String userRole(Authentication authentication) {
 		String userrole = null;
-		String userid = null;
-		
-		if(authentication != null) {
-			userid = authentication.getName();
+		if(authentication.isAuthenticated()) {
+			String userid = authentication.getName();
 			SchoolUser user = userservice.findUserByUserId(userid);
-			Collection<Role> roles = user.getRoles();
-		
-			for (Role role : roles) {
-				if(role.getRolename().equals("ADMIN")) {
-					userrole = "admin";
+			SchoolUser userbyemail = userservice.findUserByEmail(userid);
+			
+			if(user != null) {
+				Collection<Role> roles = user.getRoles();
+				for (Role role : roles) {
+					if(role.getRolename().equals("ADMIN")) {
+						userrole = "admin";
+					}
+					else if(role.getRolename().equals("TEACHER")) {
+						userrole = "teacher";
+					}
+					else if(role.getRolename().equals("PARENT")) {
+						userrole = "parent";
+					}
+					else {
+						userrole = "user";
+					}
 				}
-				if(role.getRolename().equals("TEACHER")) {
-					userrole = "teacher";
-				}
-				if(role.getRolename().equals("PARENT")) {
-					userrole = "parent";
-				}
-				userrole = "user";
 			}
+			
+			if(userbyemail != null) {
+				Collection<Role> rolesemail = userbyemail.getRoles();
+				for (Role role : rolesemail) {
+					if(role.getRolename().equals("ADMIN")) {
+						userrole = "admin";
+					}
+					else if(role.getRolename().equals("TEACHER")) {
+						userrole = "teacher";
+					}
+					else if(role.getRolename().equals("PARENT")) {
+						userrole = "parent";
+					}
+					else {
+						userrole = "user";
+					}
+				}
+			}
+			
 		}
+		
 		return userrole;
 	}
 	

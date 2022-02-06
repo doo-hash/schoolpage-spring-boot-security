@@ -8,6 +8,10 @@ public interface IAdminService {
 
 	
 	public List<Adminupdate> findAll();
+	
+	public Adminupdate findByAdminId(String adminid);
+	
+	public Adminupdate findByEmail(String email);
 
 	public void update(Adminupdate adminupdate);
 }

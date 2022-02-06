@@ -119,11 +119,16 @@ public class SchoolUserServiceImpl implements ISchoolUserService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		SchoolUser user = userRepo.findByUserid(username);
-		if(user == null) {
+		SchoolUser userbyid = userRepo.findByUserid(username);
+		SchoolUser userbyemail = userRepo.findByEmail(username);
+		
+			if(userbyid != null) {
+				return new org.springframework.security.core.userdetails.User(userbyid.getUserid(), userbyid.getPassword(), mapRolesToAuthorities(userbyid.getRoles()));
+			}
+			if(userbyemail != null) {
+				return new org.springframework.security.core.userdetails.User(userbyemail.getEmail(), userbyemail.getPassword(), mapRolesToAuthorities(userbyemail.getRoles()));
+			}
 			throw new UsernameNotFoundException("Invalid Username or password");
-		}
-		return new org.springframework.security.core.userdetails.User(user.getUserid(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
 	}
 	
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){

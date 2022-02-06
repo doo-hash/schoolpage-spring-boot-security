@@ -12,35 +12,60 @@ import com.mockpage.schoolwebapp.schoolpage.home.repository.SchoolUserRepository
 @Service
 public class GuestUserServiceImpl implements IGuestUserService {
 
-	private GuestUserRepository GuestUserRepo;
+	private GuestUserRepository guestuserRepo;
 	private SchoolUserRepository userRepo;
 	
-	public GuestUserServiceImpl(GuestUserRepository GuestUserRepo, SchoolUserRepository userRepo) {
+	public GuestUserServiceImpl(GuestUserRepository guestuserRepo, SchoolUserRepository userRepo) {
 		super();
-		this.GuestUserRepo = GuestUserRepo;
+		this.guestuserRepo = guestuserRepo;
 		this.userRepo = userRepo;
 	}
 
 
 	@Override
 	public List<GuestUserupdate> findAll() {
-		List<GuestUserupdate> findAllGuestUsers = GuestUserRepo.findAll();
+		List<GuestUserupdate> findAllGuestUsers = guestuserRepo.findAll();
 		return findAllGuestUsers;
 	}
 
 
 	@Override
 	public void update(GuestUserupdate guestuserupdate) {
-		System.out.println(guestuserupdate);
-		GuestUserRepo.save(guestuserupdate);
-		SchoolUser updateUser = userRepo.findByUserid(guestuserupdate.getUserId());
-		System.out.println(updateUser);
-		updateUser.setFirstname(guestuserupdate.getFirstName());
-		updateUser.setLastname(guestuserupdate.getLastName());
-		updateUser.setPhonenumber(guestuserupdate.getPhonenumber());
-		System.out.println(updateUser);
-		userRepo.save(updateUser);
-		System.out.println(userRepo.findByUserid(updateUser.getUserid()));
+		SchoolUser user = userRepo.findByUserid(guestuserupdate.getUserId());
+		GuestUserupdate guestuser = guestuserRepo.findByUserId(guestuserupdate.getUserId());
+		
+		if(guestuser == null) {
+			guestuserRepo.save(guestuserupdate);
+		}
+		else {
+			guestuser.setFirstName(guestuserupdate.getFirstName());
+			guestuser.setLastName(guestuserupdate.getLastName());
+			guestuser.setEmail(guestuserupdate.getEmail());
+			guestuser.setPhonenumber(guestuserupdate.getPhonenumber());
+			guestuser.setUserId(guestuserupdate.getUserId());
+			guestuser.setEducation(guestuserupdate.getEducation());
+			guestuser.setDescription(guestuserupdate.getDescription());
+			guestuserRepo.save(guestuser);
+		}
+		
+		user.setDesignation(guestuserupdate.getDescription());
+		user.setEmail(guestuserupdate.getEmail());
+		user.setPhonenumber(guestuserupdate.getPhonenumber());
+		userRepo.save(user);
+	}
+
+
+	@Override
+	public GuestUserupdate findByUserId(String userid) {
+		GuestUserupdate user = guestuserRepo.findByUserId(userid);
+		return user;
+	}
+
+
+	@Override
+	public GuestUserupdate findByEmail(String email) {
+		GuestUserupdate user = guestuserRepo.findByEmail(email);
+		return user;
 	}
 
 }

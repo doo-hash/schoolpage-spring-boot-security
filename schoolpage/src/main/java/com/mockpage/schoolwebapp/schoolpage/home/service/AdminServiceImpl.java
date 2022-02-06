@@ -31,17 +31,46 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Override
 	public void update(Adminupdate adminupdate) {
-		System.out.println(adminupdate);
-		adminRepo.save(adminupdate);
-		SchoolUser updateUser = userRepo.findByUserid(adminupdate.getAdminId());
-		System.out.println(updateUser);
-		updateUser.setFirstname(adminupdate.getFirstName());
-		updateUser.setLastname(adminupdate.getLastName());
-		updateUser.setPhonenumber(adminupdate.getPhonenumber());
-		updateUser.setDesignation(adminupdate.getDesignation());
-		System.out.println(updateUser);
-		userRepo.save(updateUser);
-		System.out.println(userRepo.findByUserid(updateUser.getUserid()));
+		SchoolUser user = userRepo.findByUserid(adminupdate.getAdminId());
+		Adminupdate admin = adminRepo.findByAdminId(adminupdate.getAdminId());
+		if(admin == null) {
+			adminRepo.save(adminupdate);
+		}
+		else {
+			admin.setFirstName(adminupdate.getFirstName());
+			admin.setLastName(adminupdate.getLastName());
+			admin.setEmail(adminupdate.getEmail());
+			admin.setPhonenumber(adminupdate.getPhonenumber());
+			admin.setAdminId(adminupdate.getAdminId());
+			admin.setDesignation(adminupdate.getDesignation());
+			admin.setEducation(adminupdate.getEducation());
+			admin.setWork_experience(adminupdate.getWork_experience());
+			adminRepo.save(admin);
+		}
+		user.setEmail(adminupdate.getEmail());
+		user.setPhonenumber(adminupdate.getPhonenumber());
+		user.setDesignation(adminupdate.getDesignation());
+		userRepo.save(user);
+	}
+
+
+	@Override
+	public Adminupdate findByAdminId(String adminid) {
+		if(adminid != null) {
+			Adminupdate admin = adminRepo.findByAdminId(adminid);
+			return admin;
+		}
+		return null;
+	}
+
+
+	@Override
+	public Adminupdate findByEmail(String email) {
+		if(email != null) {
+			Adminupdate admin = adminRepo.findByEmail(email);
+			return admin;
+		}
+		return null;
 	}
 
 }

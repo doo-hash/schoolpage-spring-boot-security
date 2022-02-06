@@ -40,7 +40,7 @@
 <!-- Sign Up -->
     <section class="cotainer-lg signup-layout">
         <div class="p-lg-2">
-		<div th:if="${param.success}" class="alert alert-info px-5">You have successfully registered!!</div> 
+		<div th:if="${param.success}" class="alert alert-success px-5 mx-5 text-center">You have successfully registered!!</div> 
 		<div th:if="${param.error}" class="alert alert-info px-5">Please check the below errors.</div> 
         <form class="px-5 pb-2" 
         th:action="@{/home/register/save}" th:object="${schooluser}" method="post">

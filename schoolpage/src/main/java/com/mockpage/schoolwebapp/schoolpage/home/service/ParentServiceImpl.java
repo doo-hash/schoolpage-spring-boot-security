@@ -12,35 +12,56 @@ import com.mockpage.schoolwebapp.schoolpage.home.repository.UserParentRepository
 @Service
 public class ParentServiceImpl implements IParentService {
 
-	private UserParentRepository ParentRepo;
+	private UserParentRepository parentRepo;
 	private SchoolUserRepository userRepo;
 	
-	public ParentServiceImpl(UserParentRepository ParentRepo, SchoolUserRepository userRepo) {
+	public ParentServiceImpl(UserParentRepository parentRepo, SchoolUserRepository userRepo) {
 		super();
-		this.ParentRepo = ParentRepo;
+		this.parentRepo = parentRepo;
 		this.userRepo = userRepo;
 	}
 
 
 	@Override
 	public List<Parentupdate> findAll() {
-		List<Parentupdate> findAllParents = ParentRepo.findAll();
+		List<Parentupdate> findAllParents = parentRepo.findAll();
 		return findAllParents;
 	}
 
 
 	@Override
-	public void update(Parentupdate Parentupdate) {
-		System.out.println(Parentupdate);
-		ParentRepo.save(Parentupdate);
-		SchoolUser updateUser = userRepo.findByUserid(Parentupdate.getParentId());
-		System.out.println(updateUser);
-		updateUser.setFirstname(Parentupdate.getFirstName());
-		updateUser.setLastname(Parentupdate.getLastName());
-		updateUser.setPhonenumber(Parentupdate.getPhonenumber());
-		System.out.println(updateUser);
-		userRepo.save(updateUser);
-		System.out.println(userRepo.findByUserid(updateUser.getUserid()));
+	public void update(Parentupdate parentupdate) {
+		SchoolUser user = userRepo.findByUserid(parentupdate.getParentId());
+		Parentupdate parent = parentRepo.findByParentId(parentupdate.getParentId());
+		if(parent == null) {
+			parentRepo.save(parentupdate);
+		}
+		else {
+			parent.setFirstName(parentupdate.getFirstName());
+			parent.setLastName(parentupdate.getLastName());
+			parent.setEmail(parentupdate.getEmail());
+			parent.setParentId(parentupdate.getParentId());
+			parent.setPhonenumber(parentupdate.getPhonenumber());
+			parent.setStudentName(parentupdate.getStudentName());
+			parentRepo.save(parent);
+		}
+		user.setEmail(parentupdate.getEmail());
+		user.setPhonenumber(parentupdate.getPhonenumber());
+		userRepo.save(user);
+	}
+
+
+	@Override
+	public Parentupdate findByParentId(String parentid) {
+		Parentupdate parent = parentRepo.findByParentId(parentid);
+		return parent;
+	}
+
+
+	@Override
+	public Parentupdate findByEmail(String email) {
+		Parentupdate parent = parentRepo.findByEmail(email);
+		return parent;
 	}
 
 }
