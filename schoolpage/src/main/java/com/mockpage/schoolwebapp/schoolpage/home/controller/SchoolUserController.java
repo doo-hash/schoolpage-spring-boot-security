@@ -63,10 +63,7 @@ import com.mockpage.schoolwebapp.schoolpage.home.validator.CaptchaValidator;
 		  boolean islname = userservice.existsByLastName(user.getLastname());
 		  boolean isemail = userservice.existsByEmail(user.getEmail());
 		  if(!result.hasErrors()) {
-			  if(captchavalidator.isValidate(captcha)) {
-				  if(user.getRoles().isEmpty()) {
-					  model.addAttribute("roleserr","Please Select your category.");
-					  
+			  if(captchavalidator.isValidate(captcha)) {					  
 					  if(isuserid || isfname || islname || isemail) { 
 					  if(isuserid) { model.addAttribute("useridmsg","already exists!!");} 
 					  if(isfname) { model.addAttribute("fnamemsg","already exists!!");} 
@@ -95,7 +92,6 @@ import com.mockpage.schoolwebapp.schoolpage.home.validator.CaptchaValidator;
 					  if(isuserid && isfname && islname && isemail) { model.addAttribute("useridmsg","already exists!!");
 						  model.addAttribute("fnamemsg","already exists!!"); model.addAttribute("lnamemsg","already exists!!");
 						  model.addAttribute("emailmsg","already exists!!"); }
-					  }
 					  return "userform";
 				  }
 				  userservice.saveSchoolUser(user);
